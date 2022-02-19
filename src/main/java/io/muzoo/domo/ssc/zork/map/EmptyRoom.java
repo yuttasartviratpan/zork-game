@@ -1,9 +1,28 @@
 package io.muzoo.domo.ssc.zork.map;
 
+import java.util.Map;
+
 public class EmptyRoom implements Room{
+    String roomDescription;
+
+    EmptyRoom(){
+        roomDescription = "This is an empty room.";
+    }
+
+
     @Override
     public void getRoomInfo() {
-
+        System.out.println(roomDescription);
+        if(door.isEmpty()){
+            System.out.println("There are no doors, this room is a dead end");
+        }
+        else{
+            System.out.print("The available paths are:");
+            for(Map.Entry<String, Room> possibleDoor : door.entrySet()){
+                System.out.print(" " + possibleDoor.getKey());
+            }
+            System.out.print(".\n");
+        }
     }
 
     @Override

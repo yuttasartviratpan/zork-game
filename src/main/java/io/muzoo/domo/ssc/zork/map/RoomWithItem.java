@@ -20,4 +20,8 @@ public class RoomWithItem implements Room{
     public boolean isPlayerInTheRoom() {
         return false;
     }
+
+    private void setItem(){
+
+    }
 }

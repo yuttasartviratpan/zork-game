@@ -20,4 +20,12 @@ public class RoomWithMonsterAndItem implements Room{
     public boolean isPlayerInTheRoom() {
         return false;
     }
+
+    private void setMonster(){
+
+    }
+
+    private void setItem(){
+
+    }
 }
