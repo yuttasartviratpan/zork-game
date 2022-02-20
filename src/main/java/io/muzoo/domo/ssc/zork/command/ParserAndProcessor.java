@@ -81,6 +81,9 @@ class Parser{
                     arguments.add(text.next());
                 }
             }
+            else{
+                processedCommand = CommandList.NOTFOUND;
+            }
         }
     }
 
