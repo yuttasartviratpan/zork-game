@@ -72,13 +72,15 @@ class Parser{
         }
         else{
             String parsedCommand = text.next().toLowerCase();
-            if(numberOfArgumentInCommand.get(parsedCommand) == 0){
-                processedCommand = allCommand.get(parsedCommand);
-            }
-            else if(numberOfArgumentInCommand.get(parsedCommand) == 1){
-                processedCommand = allCommand.get(parsedCommand);
-                if(text.hasNext()){
-                    arguments.add(text.next());
+            if(numberOfArgumentInCommand.containsKey(parsedCommand)){
+                if(numberOfArgumentInCommand.get(parsedCommand) == 0){
+                    processedCommand = allCommand.get(parsedCommand);
+                }
+                else if(numberOfArgumentInCommand.get(parsedCommand) == 1){
+                    processedCommand = allCommand.get(parsedCommand);
+                    if(text.hasNext()){
+                        arguments.add(text.next());
+                    }
                 }
             }
             else{
