@@ -1,18 +1,15 @@
 package io.muzoo.domo.ssc.zork;
 
-import io.muzoo.domo.ssc.zork.command.Parser;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import io.muzoo.domo.ssc.zork.command.CommandList;
+import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
 
 public class Main {
     public static void main(String[] args) {
         boolean running = true;
-        Parser game_instance = new Parser();
+        System.out.println("Welcome to this god awful game. Try saying some command!");
+        ParserAndProcessor game_instance = new ParserAndProcessor();
         while(running){
-            running = game_instance.parser();
-
+            running = game_instance.run();
         }
     }
 }
