@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class EmptyRoom implements Room{
     String roomDescription;
+    boolean isPlayerCurrentlyIn;
 
     EmptyRoom(){
         roomDescription = "This is an empty room.";
@@ -27,16 +28,16 @@ public class EmptyRoom implements Room{
 
     @Override
     public void setNextRoom(String direction, Room room) {
-
+        door.put(direction, room);
     }
 
     @Override
     public void setPlayerIsInRoom(boolean isInRoom) {
-
+        isPlayerCurrentlyIn = isInRoom;
     }
 
     @Override
     public boolean isPlayerInTheRoom() {
-        return false;
+        return isPlayerCurrentlyIn;
     }
 }

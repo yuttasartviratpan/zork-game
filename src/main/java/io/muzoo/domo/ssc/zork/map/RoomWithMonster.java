@@ -1,6 +1,10 @@
 package io.muzoo.domo.ssc.zork.map;
 
+import io.muzoo.domo.ssc.zork.character.Monster;
+
 public class RoomWithMonster implements Room{
+    Monster monster;
+
     @Override
     public void getRoomInfo() {
 
@@ -21,9 +25,11 @@ public class RoomWithMonster implements Room{
         return false;
     }
 
-    private void setMonster(){
-
+    private void setMonster(Monster monster){
+        this.monster = monster;
     }
+
+
 
 
 }
