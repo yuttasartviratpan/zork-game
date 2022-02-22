@@ -12,33 +12,100 @@ public class ParserAndProcessor {
                 System.out.println("No command has been entered. Use \"help\" to view the list of available command.");
                 return true;
 
-            case EXIT:
-                //Run command exit
-                System.out.println("Okay. Aborting.");
-                return false;
-
             case INFO:
                 //Run command info
                 System.out.println("Here is your info");
                 return true;
 
+            case TAKE:
+                //Run command take
+                System.out.println("This is your take: ");
+                checkArgument();
+                return true;
+
+            case USE:
+                //Run command use
+                System.out.println("This is your use: ");
+                checkArgument();
+                return true;
+
+            case DROP:
+                //Run command drop
+                System.out.println("This is your drop: ");
+                checkArgument();
+                return true;
+
+            case ATTACK:
+                //Run command attack
+                System.out.println("This is your attack: ");
+                checkArgument();
+                return true;
+
             case GO:
                 //Run command go
                 System.out.println("This is your go: ");
-                if(parsed.arguments.isEmpty()){
-                    System.out.println("No argument were given");
-                }
-                else{
-                    for (String argument : parsed.arguments) {
-                        System.out.println("- " + argument);
-                    }
-                }
+                checkArgument();
                 return true;
+
+            case MAP:
+                //Run command map
+                System.out.println("Here's your map");
+                return true;
+
+            case AUTOPILOT:
+                //Run command auto
+                System.out.println("Autopiloting using: ");
+                checkArgument();
+                return true;
+
+            case HELP:
+                //Run command help
+                System.out.println("There is no help right now");
+                return true;
+
+            case QUIT:
+                //Run command quit
+                System.out.println("Quitting the game");
+                return false;
+
+            case PLAY:
+                //Run command play
+                System.out.println("Here's your play: ");
+                checkArgument();
+                return true;
+
+            case LOAD:
+                //Run command load
+                System.out.println("Here's your load: ");
+                checkArgument();
+                return true;
+
+            case SAVE:
+                //Run command save
+                System.out.println("Here's your save: ");
+                checkArgument();
+                return true;
+
+            case EXIT:
+                //Run command exit
+                System.out.println("Okay. Aborting.");
+                return false;
 
             default:
                 System.out.println("Unknown command. Use \"help\" to view the list of available command.");
                 return true;
 
+        }
+    }
+
+    private void checkArgument(){ //Delete this when actually implemented Commands
+        if(parsed.arguments.isEmpty()){
+            System.out.println("No argument were given");
+        }
+        else{
+            for (String argument : parsed.arguments) {
+                System.out.println("- " + argument);
+            }
         }
     }
 
