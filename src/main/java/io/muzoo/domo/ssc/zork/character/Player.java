@@ -2,40 +2,38 @@ package io.muzoo.domo.ssc.zork.character;
 
 import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 
-public class Player implements Stats{
+public class Player extends Stats{
+    boolean gameOver;
 
-    @Override
-    public void setCurrentHP(int hp) {
-
+    public Player(){
+        maxHP = 100;
+        currentHP = maxHP;
+        attackPower = 10;
+        weaponOnHand = null;
+        gameOver = false;
     }
 
-    @Override
-    public void setMaxHP(int hp) {
 
-    }
-
-    @Override
-    public void setAttackPower(int powerLevel) {
-
-    }
-
-    @Override
-    public int attackDamage() {
-        return 0;
-    }
-
-    @Override
-    public void equipWeapon(ItemWeapon weapon) {
-
-    }
-
-    @Override
-    public boolean checkIfDead() {
-        return true;
-    }
-
-    @Override
     public void setDead(){
-        //GameOver
+        gameOver = true;
     }
+
+    public boolean isGameOver(){
+        return gameOver;
+    }
+
+    public void increaseAttack(int attack){
+        attackPower += attack;
+    }
+
+    public void nextRoomHeal(int hp){
+        if(currentHP + hp > maxHP){
+            currentHP = maxHP;
+        }
+        else{
+            currentHP += hp;
+        }
+    }
+
+
 }

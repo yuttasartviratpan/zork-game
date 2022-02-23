@@ -2,66 +2,20 @@ package io.muzoo.domo.ssc.zork.character;
 
 import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 import java.util.Random;
-public class Monster implements Stats{
+public class Monster extends Stats{
     Random randomizer = new Random();
-    int maxHP;
-    int currentHP = maxHP;
-    int attackPower = randomizer.nextInt(10) + 1; //Random from 1-10 inclusive
-    ItemWeapon weaponOnHand;
+    boolean isDead = false;
 
-    Monster(){
+    public Monster(){
         maxHP = randomizer.nextInt(401) + 100; //Random from 100-500 inclusive
+        currentHP = maxHP;
+        attackPower = randomizer.nextInt(10) + 1; //Random from 1-10 inclusive
+        weaponOnHand = null;
     }
 
-    @Override
-    public void setCurrentHP(int hp) {
-        currentHP = hp;
-    }
-
-    @Override
-    public void setMaxHP(int hp) {
-        maxHP = hp;
-    }
-
-    @Override
-    public void setAttackPower(int powerLevel) {
-        attackPower = powerLevel;
-    }
-
-    @Override
-    public int attackDamage() {
-        int attackPotential;
-        if(weaponOnHand == null){
-            if(attackPower <= 2){
-                attackPotential = (new Random()).nextInt(attackPower) + 1;
-            }
-            else{
-                attackPotential = (new Random()).nextInt(5) + attackPower-2;
-            }
-        }
-        else{
-            attackPotential = (new Random()).nextInt(5) + attackPower; //attackPower + weaponOnHand.attack -2 or smth
-        }
-        return attackPotential;
-    }
-
-    @Override
-    public void equipWeapon(ItemWeapon weapon) {
-        weaponOnHand = weapon;
-    }
-
-    @Override
-    public boolean checkIfDead() {
-        if(currentHP <= 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    @Override
     public void setDead(){
+        System.out.println("The monster has been defeated");
+        isDead = true;
     }
 
     public void monsterPowerDescription(){

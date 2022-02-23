@@ -8,7 +8,7 @@ public class Main {
         boolean running = true;
         System.out.println("Welcome to this god awful game. Try saying some command!");
         ParserAndProcessor game_instance = new ParserAndProcessor();
-        while(running){
+        while(running){ //While still running or Player_character is not gameOver or game objective is not over;
             running = game_instance.run();
         }
     }
