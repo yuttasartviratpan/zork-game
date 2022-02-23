@@ -2,31 +2,23 @@ package io.muzoo.domo.ssc.zork.map;
 
 import io.muzoo.domo.ssc.zork.character.Monster;
 
-public class RoomWithMonster implements Room{
+public class RoomWithMonster extends Room{
     Monster monster;
+    String roomName;
+    String roomDescription;
+    boolean isPlayerCurrentlyIn;
 
-    @Override
-    public void getRoomInfo() {
-
+    public RoomWithMonster(String roomName, String roomDescription){
+        this.roomName = roomName;
+        this.roomDescription = roomDescription;
     }
 
-    @Override
-    public void setNextRoom(String direction, Room room) {
-
-    }
-
-    @Override
-    public void setPlayerIsInRoom(boolean isInRoom) {
-
-    }
-
-    @Override
-    public boolean isPlayerInTheRoom() {
-        return false;
-    }
-
-    private void setMonster(Monster monster){
+    public void setMonster(Monster monster){
         this.monster = monster;
+    }
+
+    public Monster getMonster(){
+        return monster;
     }
 
 

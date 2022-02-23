@@ -3,18 +3,40 @@ package io.muzoo.domo.ssc.zork.map;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface Room {
+public abstract class Room {
+    String roomName;
+    String roomDescription;
+    boolean isPlayerCurrentlyIn;
+    Map<String, Room> nextRoom;
 
-    boolean isPlayerCurrentlyIn = false; //During the play, is the player currently in this room right now
-    Map<String, Room> door = new HashMap<>();
+    public void getRoomInfo() {
+        System.out.println(roomDescription);
+        if(nextRoom.isEmpty()){
+            System.out.println("There are no doors, this room is a dead end");
+        }
+        else{
+            System.out.print("The available paths are:");
+            for(Map.Entry<String, Room> possibleDoor : nextRoom.entrySet()){
+                System.out.print(" " + possibleDoor.getKey());
+            }
+            System.out.print(".\n");
+        }
+    }
 
 
-    public void getRoomInfo();
+    public void setNextRoom(Room northRoom, Room southRoom, Room westRoom, Room eastRoom) {
+        nextRoom.put("north", northRoom);
+        nextRoom.put("south", southRoom);
+        nextRoom.put("west", westRoom);
+        nextRoom.put("east", eastRoom);
+    }
 
+    public void setPlayerIsInRoom(boolean isInRoom) {
+        isPlayerCurrentlyIn = isInRoom;
+    }
 
-    void setNextRoom(String direction, Room room);
-    void setPlayerIsInRoom(boolean isInRoom);
-    boolean isPlayerInTheRoom();
-
+    public boolean isPlayerInTheRoom() {
+        return isPlayerCurrentlyIn;
+    }
 
 }
