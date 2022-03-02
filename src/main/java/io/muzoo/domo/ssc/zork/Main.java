@@ -1,9 +1,5 @@
 package io.muzoo.domo.ssc.zork;
 
-import io.muzoo.domo.ssc.zork.command.CommandList;
-import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
-import io.muzoo.domo.ssc.zork.map.map1.MapOneRule;
-
 public class Main {
     public static void main(String[] args) {
 //        boolean running = true;

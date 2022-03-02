@@ -4,12 +4,13 @@ import io.muzoo.domo.ssc.zork.character.Player;
 import io.muzoo.domo.ssc.zork.command.CommandFactory;
 import io.muzoo.domo.ssc.zork.command.CommandList;
 import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
-import io.muzoo.domo.ssc.zork.map.map1.MapOneRule;
+import io.muzoo.domo.ssc.zork.map.ZorkMap;
+import io.muzoo.domo.ssc.zork.map.map1.MapOne;
 
 import java.util.List;
 
 public class Game {
-    MapOneRule map;
+    ZorkMap map;
     Player player;
     CommandFactory command;
     ParserAndProcessor parser;
@@ -19,10 +20,10 @@ public class Game {
 
 
     public Game(){
-        map = new MapOneRule();
+        map = null;
         player = new Player();
         parser = new ParserAndProcessor();
-        command = new CommandFactory(map, player);
+        command = new CommandFactory(map, player, inGame);
     }
 
     public void runGame(){

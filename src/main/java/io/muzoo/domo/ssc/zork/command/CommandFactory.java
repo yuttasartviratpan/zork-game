@@ -1,20 +1,23 @@
 package io.muzoo.domo.ssc.zork.command;
 
 import io.muzoo.domo.ssc.zork.character.Player;
-import io.muzoo.domo.ssc.zork.map.map1.MapOneRule;
+import io.muzoo.domo.ssc.zork.map.AvailableMap;
+import io.muzoo.domo.ssc.zork.map.ZorkMap;
+import io.muzoo.domo.ssc.zork.map.map1.MapOne;
 
 import java.util.List;
+import java.util.Map;
 
 public class CommandFactory {
-    MapOneRule map;
+    ZorkMap map;
     Player player;
     ParserAndProcessor parser;
     boolean isInGame;
 
-    public CommandFactory(MapOneRule map, Player player){
+    public CommandFactory(ZorkMap map, Player player, boolean isInGame){
         this.map = map;
         this.player = player;
-        this.isInGame = false;
+        this.isInGame = isInGame;
     }
 
 
@@ -31,23 +34,90 @@ public class CommandFactory {
             case ATTACK:
                 return true;
             case GO:
-                (new CommandGo(map, player, isInGame, arguments.get(0))).run();
+                if(isInGame){
+                    if(arguments.size() == 0){
+                        System.out.println("Where are we going, tell me");
+                    }
+                    else{
+                        (new CommandGo(map, player, arguments.get(0))).run();
+                    }
+                }
+                else{
+                    System.out.println("You cannot use this command while you're not in the map");
+                }
                 return true;
             case HELP:
+                Map<String, String> allCommand = (new AllCommandList()).getAllCommandInfo();
+                Map<String, Integer> numOfArguments = (new AllCommandList()).getAllNumberOfArgumentInCommand();
+                System.out.println("The available commands are: ");
+                for(String i : allCommand.keySet()){
+                    System.out.print(" - " + i + " : " + allCommand.get(i));
+                    if(numOfArguments.get(i) > 0){
+                        if(i.equalsIgnoreCase("go")){
+                            System.out.print(" <direction>");
+                        }
+                        if(i.equalsIgnoreCase("autopilot")){
+                            System.out.print(" <file>");
+                        }
+                        if(i.equalsIgnoreCase("play")){
+                            System.out.print(" <map-name>");
+                        }
+                        if(i.equalsIgnoreCase("load")){
+                            System.out.print(" <save-point-name>");
+                        }
+                        if(i.equalsIgnoreCase("save")){
+                            System.out.print(" <save-point-name>");
+                        }
+                        if(i.equalsIgnoreCase("equip")){
+                            System.out.print(" <weapon-name>");
+                        }
+                        if(i.equalsIgnoreCase("drop")){
+                            System.out.print(" <item-name>");
+                        }
+                        if(i.equalsIgnoreCase("use")){
+                            System.out.print(" <item-name>");
+                        }
+                        System.out.print("\n");
+                    }
+                    else{
+                        System.out.print("\n");
+                    }
+
+                }
                 return true;
             case QUIT:
+                isInGame = false;
                 return true;
             case PLAY:
+                if(!isInGame){
+                    if(arguments.size() == 0){
+
+                    }
+                    map = (new CommandPlay(map, arguments.get(0)).run());
+                    isInGame = true;
+                }
+                else{
+                    System.out.println("Quit this map first before you can play other map");
+                }
                 return true;
             case LOAD:
                 return true;
             case SAVE:
                 return true;
             case EXIT:
-                return false;
+                if(isInGame){
+                    System.out.println("You're currently in game, use quit command first");
+                    return true;
+                }
+                else{
+                    System.out.println("Exiting the program. See your later?");
+                    return false;
+                }
             case EQUIP:
                 return true;
             case STATS:
+                return true;
+            case INVENTORY:
                 return true;
             default:
                 System.out.println("Unknown command. Use \"help\" to view the list of available command.");
@@ -57,96 +127,6 @@ public class CommandFactory {
     }
 
 }
-/*
-case EMPTY:
-                System.out.println("No command has been entered. Use \"help\" to view the list of available command.");
-                return true;
-
-            case INFO:
-                //Run command info
-                System.out.println("Here is your info");
-                return true;
-
-            case TAKE:
-                //Run command take
-                System.out.println("This is your take: ");
-                checkArgument();
-                return true;
-
-            case USE:
-                //Run command use
-                System.out.println("This is your use: ");
-                checkArgument();
-                return true;
-
-            case DROP:
-                //Run command drop
-                System.out.println("This is your drop: ");
-                checkArgument();
-                return true;
-
-            case ATTACK:
-                //Run command attack
-                System.out.println("This is your attack: ");
-                checkArgument();
-                return true;
-
-            case GO:
-                //Run command go
-                System.out.println("This is your go: ");
-                checkArgument();
-                return true;
-
-            case MAP:
-                //Run command map
-                System.out.println("Here's your map");
-                return true;
-
-            case AUTOPILOT:
-                //Run command auto
-                System.out.println("Autopiloting using: ");
-                checkArgument();
-                return true;
-
-            case HELP:
-                //Run command help
-                System.out.println("There is no help right now");
-                return true;
-
-            case QUIT:
-                //Run command quit
-                System.out.println("Quitting the game");
-                return false;
-
-            case PLAY:
-                //Run command play
-                System.out.println("Here's your play: ");
-                checkArgument();
-                return true;
-
-            case LOAD:
-                //Run command load
-                System.out.println("Here's your load: ");
-                checkArgument();
-                return true;
-
-            case SAVE:
-                //Run command save
-                System.out.println("Here's your save: ");
-                checkArgument();
-                return true;
-
-            case EXIT:
-                //Run command exit
-                System.out.println("Okay. Aborting.");
-                return false;
-
-            default:
-                System.out.println("Unknown command. Use \"help\" to view the list of available command.");
-                return true;
-
-        }
- */
 
 class CommandInfo{
 
@@ -169,32 +149,23 @@ class CommandAttack{
 }
 
 class CommandGo extends Command{
-    boolean forInGame = true;
     String parameter;
-    public CommandGo(MapOneRule map, Player player, boolean gameStatus, String parameter){
+    public CommandGo(ZorkMap map, Player player, String parameter){
         this.map = map;
         this.player = player;
-        currentGameStatus = true; //gameStatus
         this.parameter = parameter;
     }
 
-    public boolean run(){
-        if(forInGame == currentGameStatus){
-            if(map.getCurrentRoom().getRoom(parameter) == null){
-                System.out.println("That path doesn't exist");
-            }
-            else{
-                System.out.println("Moving to: " + map.getCurrentRoom().getRoom(parameter).getRoomName());
-                map.getCurrentRoom().getRoom(parameter).getRoomInfo();
-                map.moving(map.getCurrentRoom(), map.getCurrentRoom().getRoom(parameter));
-            }
-
+    public void run(){
+        if(map.getCurrentRoom().getRoom(parameter) == null){
+            System.out.println("That path doesn't exist");
         }
         else{
-            System.out.println("Cannot be use outside the map");
+            System.out.println("Moving to: " + map.getCurrentRoom().getRoom(parameter).getRoomName());
+            map.getCurrentRoom().getRoom(parameter).getRoomInfo();
+            map.moving(map.getCurrentRoom(), map.getCurrentRoom().getRoom(parameter));
+            player.nextRoomHeal(10);
         }
-
-        return false;
     }
 }
 
@@ -206,16 +177,29 @@ class CommandAutoPilot{
 
 }
 
-class CommandHelp{
-
-}
-
 class CommandQuit{
 
 }
 
-class CommandPlay{
+class CommandPlay extends Command{
+    String parameter;
+    Map<String, ZorkMap> availableMap = (new AvailableMap()).getAllMap();
+    public CommandPlay(ZorkMap map, String parameter){
+        this.map = map;
+        this.parameter = parameter;
 
+    }
+
+    public ZorkMap run(){
+        if(availableMap.get(parameter.toLowerCase()) == null){
+            System.out.println("There is no map with that name");
+            return null;
+        }
+        else{
+            System.out.println("Map: " + parameter + " loaded");
+            return availableMap.get(parameter.toLowerCase());
+        }
+    }
 }
 
 class CommandLoad{
@@ -226,14 +210,10 @@ class CommandSave{
 
 }
 
-class CommandExit{
+class CommandEquip extends Command{
 
 }
 
-class CommandEquip{
-
-}
-
-class CommandStats{
+class CommandStats extends Command{
 
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 public class Monster extends Stats{
     Random randomizer = new Random();
     boolean isDead = false;
+    boolean aggro = false;
 
     public Monster(){
         maxHP = randomizer.nextInt(401) + 100; //Random from 100-500 inclusive
