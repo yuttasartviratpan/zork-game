@@ -4,9 +4,6 @@ import io.muzoo.domo.ssc.zork.character.Monster;
 
 public class RoomWithMonster extends Room{
     Monster monster;
-    String roomName;
-    String roomDescription;
-    boolean isPlayerCurrentlyIn;
 
     public RoomWithMonster(String roomName, String roomDescription){
         this.roomName = roomName;

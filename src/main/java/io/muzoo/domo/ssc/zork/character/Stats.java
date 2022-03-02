@@ -33,10 +33,20 @@ public abstract class Stats {
             }
         }
         else{
-            attackPotential = (new Random()).nextInt(5) + attackPower; //attackPower + weaponOnHand.attack -2 or smth
+            attackPotential = (new Random()).nextInt(5) + attackPower
+                    + weaponOnHand.getAttackPower() - 2;
         }
         return attackPotential;
     }
+
+    public void attacking(Stats entity){
+        entity.currentHP -= this.attackDamage();
+        if(entity.currentHP < 0){
+            setDead();
+        }
+    }
+
+    public abstract void setDead();
 
     public void equipWeapon(ItemWeapon weapon) {
         weaponOnHand = weapon;

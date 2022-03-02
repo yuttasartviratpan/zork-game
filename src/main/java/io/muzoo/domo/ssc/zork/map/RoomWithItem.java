@@ -3,9 +3,6 @@ package io.muzoo.domo.ssc.zork.map;
 import io.muzoo.domo.ssc.zork.item.Item;
 
 public class RoomWithItem extends Room{
-    String roomName;
-    String roomDescription;
-    boolean isPlayerCurrentlyIn;
     Item item;
 
     public RoomWithItem(String roomName, String roomDescription){

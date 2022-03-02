@@ -1,12 +1,15 @@
 package io.muzoo.domo.ssc.zork.map.map1;
 
-import io.muzoo.domo.ssc.zork.character.Monster;
-import io.muzoo.domo.ssc.zork.map.EmptyRoom;
-import io.muzoo.domo.ssc.zork.map.RoomWithItem;
-import io.muzoo.domo.ssc.zork.map.RoomWithItemAndMonster;
-import io.muzoo.domo.ssc.zork.map.RoomWithMonster;
+import io.muzoo.domo.ssc.zork.map.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+//Maybe do this as a list, do that you can draw a map with it
 public class MapOneGeneration {
+    protected List<Room> firstFloorRoom = new ArrayList<>(9);
+    protected List<Room> secondFloorRoom = new ArrayList<>(9);
+
     //Room name
     String start = "The gate";
     String westGarden = "The west garden";
@@ -48,28 +51,75 @@ public class MapOneGeneration {
     String desAbenaRoom = "A room. There is a name plate saying \"Abena\"";
 
     //Room generation
-    EmptyRoom startBlock = new EmptyRoom(start, desStart);
-    RoomWithItem westGardenBlock = new RoomWithItem(westGarden, desWestGarden);
-    EmptyRoom eastGardenBlock = new EmptyRoom(eastGarden, desEastGarden);
-    RoomWithMonster mainHallBlock = new RoomWithMonster(mainHall, desMainHall);
-    RoomWithItemAndMonster livingRoomBlock = new RoomWithItemAndMonster(livingRoom, desLivingRoom);
-    RoomWithMonster diningRoomBlock = new RoomWithMonster(diningRoom, desDiningRoom);
-    RoomWithMonster kitchenRoomBlock = new RoomWithMonster(kitchen, desKitchen);
-    RoomWithItem storageRoomBlock = new RoomWithItem(storageRoom, desStorageRoom);
-    EmptyRoom secondFloorBlock = new EmptyRoom(secondFloor, desSecondFloor);
+    EmptyRoom startBlock;
+    RoomWithItem westGardenBlock;
+    EmptyRoom eastGardenBlock;
+    RoomWithMonster mainHallBlock;
+    RoomWithItemAndMonster livingRoomBlock;
+    RoomWithMonster diningRoomBlock;
+    RoomWithMonster kitchenRoomBlock;
+    RoomWithItem storageRoomBlock;
+    EmptyRoom secondFloorBlock;
     //2nd floor
-    EmptyRoom westHallwayBlock = new EmptyRoom(westHallway, desWestHallway);
-    RoomWithItem eastHallwayBlock = new RoomWithItem(eastHallway, desEastHallway);
-    EmptyRoom northHallwayBlock = new EmptyRoom(northHallway, desNorthHallway);
-    RoomWithMonster endNorthHallwayBlock = new RoomWithMonster(endNorthHallway, desEndNorthHallway);
-    RoomWithItemAndMonster scottRoomBlock = new RoomWithItemAndMonster(scottRoom, desScottRoom);
-    RoomWithItemAndMonster mayaRoomBlock = new RoomWithItemAndMonster(mayaRoom, desMayaRoom);
-    RoomWithItemAndMonster rohanRoomBlock = new RoomWithItemAndMonster(rohanRoom, desRohanRoom);
-    RoomWithItemAndMonster abenaRoomBlock = new RoomWithItemAndMonster(abenaRoom, desAbenaRoom);
+    EmptyRoom westHallwayBlock;
+    RoomWithItem eastHallwayBlock;
+    EmptyRoom northHallwayBlock;
+    RoomWithMonster endNorthHallwayBlock;
+    RoomWithItemAndMonster scottRoomBlock;
+    RoomWithItemAndMonster mayaRoomBlock;
+    RoomWithItemAndMonster rohanRoomBlock;
+    RoomWithItemAndMonster abenaRoomBlock;
+
+    public MapOneGeneration(){
+        //Room generation
+        startBlock = new EmptyRoom(start, desStart);
+        westGardenBlock = new RoomWithItem(westGarden, desWestGarden);
+        eastGardenBlock = new EmptyRoom(eastGarden, desEastGarden);
+        mainHallBlock = new RoomWithMonster(mainHall, desMainHall);
+        livingRoomBlock = new RoomWithItemAndMonster(livingRoom, desLivingRoom);
+        diningRoomBlock = new RoomWithMonster(diningRoom, desDiningRoom);
+        kitchenRoomBlock = new RoomWithMonster(kitchen, desKitchen);
+        storageRoomBlock = new RoomWithItem(storageRoom, desStorageRoom);
+        secondFloorBlock = new EmptyRoom(secondFloor, desSecondFloor);
+        //2nd floor
+        westHallwayBlock = new EmptyRoom(westHallway, desWestHallway);
+        eastHallwayBlock = new RoomWithItem(eastHallway, desEastHallway);
+        northHallwayBlock = new EmptyRoom(northHallway, desNorthHallway);
+        endNorthHallwayBlock = new RoomWithMonster(endNorthHallway, desEndNorthHallway);
+        scottRoomBlock = new RoomWithItemAndMonster(scottRoom, desScottRoom);
+        mayaRoomBlock = new RoomWithItemAndMonster(mayaRoom, desMayaRoom);
+        rohanRoomBlock = new RoomWithItemAndMonster(rohanRoom, desRohanRoom);
+        abenaRoomBlock = new RoomWithItemAndMonster(abenaRoom, desAbenaRoom);
+
+        startBlock.setPlayerIsInRoom(true);
+    }
 
     public void generator(){
         roomConnection();
-        itemAndMonsterSpawning();
+
+        //FirstFloor
+        firstFloorRoom.add(0, kitchenRoomBlock);
+        firstFloorRoom.add(1, storageRoomBlock);
+        firstFloorRoom.add(2, null);
+        firstFloorRoom.add(3, diningRoomBlock); //3
+        firstFloorRoom.add(4, mainHallBlock);
+        firstFloorRoom.add(5, livingRoomBlock);
+        firstFloorRoom.add(6, westGardenBlock);
+        firstFloorRoom.add(7, startBlock);
+        firstFloorRoom.add(8, eastGardenBlock);
+
+        //SecondFloor
+        secondFloorRoom.add(0, mayaRoomBlock);
+        secondFloorRoom.add(1, endNorthHallwayBlock);
+        secondFloorRoom.add(2, rohanRoomBlock);
+        secondFloorRoom.add(3, scottRoomBlock);
+        secondFloorRoom.add(4, northHallwayBlock);
+        secondFloorRoom.add(5, abenaRoomBlock);
+        secondFloorRoom.add(6, westHallwayBlock);
+        secondFloorRoom.add(7, secondFloorBlock);
+        secondFloorRoom.add(8, eastHallwayBlock);
+
+        //itemAndMonsterSpawning();
     }
 
     //Room connection
@@ -78,11 +128,13 @@ public class MapOneGeneration {
         westGardenBlock.setNextRoom(null, null, null, startBlock);
         eastGardenBlock.setNextRoom(null, null, startBlock, null);
         mainHallBlock.setNextRoom(secondFloorBlock, startBlock, diningRoomBlock, livingRoomBlock);
+        mainHallBlock.setConnectsToElevatedRoom("north");
         livingRoomBlock.setNextRoom(null, null, mainHallBlock, null);
         diningRoomBlock.setNextRoom(kitchenRoomBlock, null, null, mainHallBlock);
         kitchenRoomBlock.setNextRoom(null, diningRoomBlock, null, storageRoomBlock);
         storageRoomBlock.setNextRoom(null, null, kitchenRoomBlock, null);
         secondFloorBlock.setNextRoom(northHallwayBlock, mainHallBlock, westHallwayBlock, eastHallwayBlock);
+        secondFloorBlock.setConnectsToElevatedRoom("south");
         //2nd floor
         westHallwayBlock.setNextRoom(scottRoomBlock, null, null, secondFloorBlock);
         eastHallwayBlock.setNextRoom(abenaRoomBlock, null, secondFloorBlock, null);
@@ -94,6 +146,7 @@ public class MapOneGeneration {
         abenaRoomBlock.setNextRoom(null, eastHallwayBlock, northHallwayBlock, null);
     }
 
+    /*
     private void itemAndMonsterSpawning(){
         //Room with item
         westGardenBlock.setItem();
@@ -113,7 +166,14 @@ public class MapOneGeneration {
         rohanRoomBlock.setItemAndMonster(, (new Monster()));
         abenaRoomBlock.setItemAndMonster(, (new Monster()));
     }
+    */
 
+    public void playerMoveIntoRoom(Room room){
+        room.setPlayerIsInRoom(true);
+    }
 
+    public void playerLeavesRoom(Room room){
+        room.setPlayerIsInRoom(false);
+    }
 
 }
