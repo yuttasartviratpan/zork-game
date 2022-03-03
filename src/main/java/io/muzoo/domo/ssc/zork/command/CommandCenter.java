@@ -66,7 +66,7 @@ public class CommandCenter {
                         System.out.println("What are we dropping?");
                     }
                     else{
-                        (new CommandGo(map, player, arguments.get(0))).run();
+                        (new CommandDrop(player, arguments.get(0))).run();
                     }
                 }
                 else{
