@@ -61,6 +61,17 @@ public class CommandCenter {
                 return true;
 
             case DROP:
+                if(isInGame){
+                    if(arguments.isEmpty()){
+                        System.out.println("What are we dropping?");
+                    }
+                    else{
+                        (new CommandGo(map, player, arguments.get(0))).run();
+                    }
+                }
+                else{
+                    System.out.println("You cannot use this command while you're not in the map");
+                }
                 return true;
 
             case ATTACK:
@@ -147,9 +158,18 @@ public class CommandCenter {
                 }
 
             case EQUIP:
-                return true;
-
-            case STATS:
+                if(isInGame){
+                    if(arguments.isEmpty()){
+                        System.out.println("Please enter what weapon to equip, check by typing: ");
+                        System.out.println("\"inventory weapon\"");
+                    }
+                    else{
+                        new CommandEquip(player, arguments.get(0)).run();
+                    }
+                }
+                else{
+                    System.out.println("This command can only be use while in a map");
+                }
                 return true;
 
             case INVENTORY:
@@ -286,7 +306,21 @@ class CommandInventory extends Command{
 }
 
 class CommandTake{
+    ZorkMap map;
+    Player player;
+    public CommandTake(ZorkMap map, Player player){
+        this.map = map;
+        this.player = player;
+    }
 
+    public void run(){
+        if(map.getItemInCurrentRoom() != null){
+            player.pickUpConsumable((ItemUsable) map.getItemInCurrentRoom());
+        }
+        else{
+            System.out.println("There is no item in this room");
+        }
+    }
 }
 
 class CommandUse{
@@ -344,7 +378,22 @@ class CommandUse{
 }
 
 class CommandDrop{
+    String parameter;
+    Player player;
 
+    public CommandDrop(Player player, String parameter){
+        this.player = player;
+        this.parameter = parameter;
+    }
+
+    public void run(){
+        if(player.checkForItem(parameter) != null){
+            player.dropItem(player.checkForItem(parameter));
+        }
+        else{
+            System.out.println("Item not found");
+        }
+    }
 }
 
 class CommandAttack{
@@ -416,9 +465,16 @@ class CommandSave{
 }
 
 class CommandEquip extends Command{
+    String parameter;
+    Player player;
 
-}
+    public CommandEquip(Player player, String parameter){
+        this.player = player;
+        this.parameter = parameter;
 
-class CommandStats extends Command{
+    }
 
+    public void run(){
+        player.equipWeapon(parameter);
+    }
 }

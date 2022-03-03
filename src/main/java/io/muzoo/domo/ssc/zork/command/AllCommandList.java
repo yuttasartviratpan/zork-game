@@ -23,7 +23,6 @@ public class AllCommandList {
         allCommand.put("save", CommandList.SAVE);
         allCommand.put("exit", CommandList.EXIT);
         allCommand.put("equip", CommandList.EQUIP);
-        allCommand.put("stats", CommandList.STATS);
         allCommand.put("inventory", CommandList.INVENTORY);
 
         numberOfArgumentInCommand.put("info", 0);
@@ -41,7 +40,6 @@ public class AllCommandList {
         numberOfArgumentInCommand.put("save", 1);
         numberOfArgumentInCommand.put("exit", 0);
         numberOfArgumentInCommand.put("equip", 1);
-        numberOfArgumentInCommand.put("stats", 0);
         numberOfArgumentInCommand.put("inventory", 1);
 
         allCommandInfo.put("info", "Get the information of the room, monsters and items (if any in the room)");
@@ -59,7 +57,6 @@ public class AllCommandList {
         allCommandInfo.put("save", "Save your progression as specified name");
         allCommandInfo.put("exit", "Terminate the game");
         allCommandInfo.put("equip", "Equip the specified weapon");
-        allCommandInfo.put("stats", "Get the current status about yourself");
         allCommandInfo.put("inventory", "Check what items you have");
     }
 

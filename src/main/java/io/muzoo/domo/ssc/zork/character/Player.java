@@ -4,6 +4,9 @@ import io.muzoo.domo.ssc.zork.item.ItemUsable;
 import io.muzoo.domo.ssc.zork.item.ItemUsableType;
 import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 import io.muzoo.domo.ssc.zork.item.usable.HealthPotion;
+import io.muzoo.domo.ssc.zork.item.weapon.FryingPan;
+import io.muzoo.domo.ssc.zork.item.weapon.ShortSword;
+import io.muzoo.domo.ssc.zork.item.weapon.WoodenClub;
 
 import java.util.*;
 
@@ -22,10 +25,45 @@ public class Player extends Stats{
         consumableInventory = new HashMap<>();
         weaponInventory = new ArrayList<>();
         //For testing
-        consumableInventory.put((new HealthPotion("health-potion", "A potion",
-                ItemUsableType.HEALTH_POTION)), 1);
-        consumableInventory.put((new HealthPotion("throwing-knife", "A throwing knife",
-                ItemUsableType.THROWABLE_WEAPON)), 1);
+        weaponInventory.add(new WoodenClub());
+        weaponInventory.add(new FryingPan());
+        weaponInventory.add(new ShortSword());
+    }
+
+    public void equipWeapon(String weapon){
+        boolean found = false;
+        ItemWeapon weaponToEquip = null;
+        for(ItemWeapon arms : weaponInventory){
+            if(arms.getName().equalsIgnoreCase(weapon)){
+                found = true;
+                weaponToEquip = arms;
+            }
+        }
+        if(found){
+            weaponOnHand = weaponToEquip;
+            System.out.println("Weapon equipped");
+        }
+        else{
+            System.out.println("Weapon not found, please check in inventory");
+        }
+    }
+
+    public void dropItem(ItemUsable item){
+        if(item.getUsableType() == ItemUsableType.KEY_ITEM){
+            System.out.println("You just can't drop it");
+        }
+        else{
+            consumableInventory.put(item, consumableInventory.get(item)-1);
+        }
+    }
+
+    public ItemUsable checkForItem(String wantedItem){
+        for(ItemUsable item : consumableInventory.keySet()){
+            if(item.getName().equalsIgnoreCase(wantedItem)){
+                return item;
+            }
+        }
+        return null;
     }
 
 

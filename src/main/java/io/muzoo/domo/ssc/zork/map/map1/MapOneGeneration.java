@@ -155,11 +155,11 @@ public class MapOneGeneration {
 
     private void itemAndMonsterSpawning(){
         //Room with item
-        westGardenBlock.setItem(new KeyItem("Memorial Picture No.1", "The first piece of " +
+        westGardenBlock.setItem(new KeyItem("memorial-picture-1", "The first piece of " +
                 "nostalgic photo. You can see the big spacious house and the black hair of two person", ItemUsableType.KEY_ITEM));
-        storageRoomBlock.setItem(new KeyItem("Memorial Picture No.2", "The second piece of " +
+        storageRoomBlock.setItem(new KeyItem("memorial-picture-2", "The second piece of " +
                 "nostalgic photo. You can see a colorful rose garden and a black hair of a girl", ItemUsableType.KEY_ITEM));
-        eastHallwayBlock.setItem(new KeyItem("Memorial Picture No.3", "The third piece of " +
+        eastHallwayBlock.setItem(new KeyItem("memorial-picture-3", "The third piece of " +
                 "nostalgic photo. You can see your own face before a house", ItemUsableType.KEY_ITEM));
 
         //Room with monster
@@ -175,7 +175,7 @@ public class MapOneGeneration {
         scottRoomBlock.setItemAndMonster(new HealthPotion("health-potion",
                 "A liquid bottle of your favorite drink, apparently it heals your wound",
                 ItemUsableType.HEALTH_POTION), (new Monster()));
-        mayaRoomBlock.setItemAndMonster(new KeyItem("Memorial Picture No.4", "The fourth piece of " +
+        mayaRoomBlock.setItemAndMonster(new KeyItem("memorial-picture-4", "The fourth piece of " +
                 "nostalgic photo. You can see the face of nostalgic girl. Such that you want to forgot what happened"
                         , ItemUsableType.KEY_ITEM), (new Monster()));
         rohanRoomBlock.setItemAndMonster(new ThrowingKnives("throwing-knife",
