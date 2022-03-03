@@ -1,5 +1,8 @@
 package io.muzoo.domo.ssc.zork.map;
 
+import io.muzoo.domo.ssc.zork.character.Monster;
+import io.muzoo.domo.ssc.zork.item.Item;
+
 import java.util.*;
 
 public abstract class Room {
@@ -7,20 +10,35 @@ public abstract class Room {
     String roomDescription;
     boolean isPlayerCurrentlyIn;
     String connectsToElevatedRoomDirection = null;
+    Monster monster = null;
+    Item item = null;
     Map<String, Room> nextRoom = new HashMap<>();
 
     public void getRoomInfo() {
         System.out.println(roomDescription);
+    }
+
+    public void getPathAvailable(){
         if(nextRoom.isEmpty()){
             System.out.println("There are no doors, this room is a dead end");
         }
         else{
-            System.out.print("The available paths are:");
+            System.out.print("The available paths in \"" + roomName + "\" are:");
             for(Map.Entry<String, Room> possibleDoor : nextRoom.entrySet()){
-                System.out.print(" " + possibleDoor.getKey());
+                if(nextRoom.get(possibleDoor.getKey()) != null ){
+                    System.out.print(" " + possibleDoor.getKey());
+                }
             }
             System.out.print(".\n");
         }
+    }
+
+    public Monster getMonster() {
+        return monster;
+    }
+
+    public Item getItem(){
+        return item;
     }
 
     public void setConnectsToElevatedRoom(String direction) {

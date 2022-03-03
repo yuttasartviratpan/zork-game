@@ -10,7 +10,6 @@ public class ParserAndProcessor {
 
     public void run(){
         parsed.parser();
-
         command = parsed.processedCommand;
         arguments = parsed.arguments;
     }

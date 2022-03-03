@@ -5,10 +5,7 @@ import io.muzoo.domo.ssc.zork.item.ItemUsableType;
 import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 import io.muzoo.domo.ssc.zork.item.usable.HealthPotion;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Player extends Stats{
@@ -24,6 +21,11 @@ public class Player extends Stats{
         gameOver = false;
         consumableInventory = new HashMap<>();
         weaponInventory = new ArrayList<>();
+        //For testing
+        consumableInventory.put((new HealthPotion("health-potion", "A potion",
+                ItemUsableType.HEALTH_POTION)), 1);
+        consumableInventory.put((new HealthPotion("throwing-knife", "A throwing knife",
+                ItemUsableType.THROWABLE_WEAPON)), 1);
     }
 
 
@@ -31,7 +33,7 @@ public class Player extends Stats{
         System.out.println("Your current status: ");
         System.out.println(" - HP: " + currentHP);
         System.out.println(" - Max HP: " + maxHP);
-
+        System.out.println();
         if(weaponOnHand != null){
             System.out.println("Currently equipping: " + weaponOnHand.getName());
             System.out.println(" - attack power: " + attackPower + " (base) + " + weaponOnHand.getAttackPower()
@@ -66,53 +68,36 @@ public class Player extends Stats{
     }
 
     public void usingItem(ItemUsable item){
-        if(consumableInventory.containsKey(item)){
-
-            switch (item.getUsableType()){
-                case HEALTH_POTION:
-                    HealthPotion healthPot = (HealthPotion) item;
-                    if(currentHP + healthPot.use() > maxHP){
-                        currentHP = maxHP;
-                    }
-                    else{
-                        currentHP += healthPot.use();
-                    }
-                    break;
-                case KEY_ITEM:
-                    System.out.println("Just keep this safe, and survive");
-                    break;
-                case THROWABLE_WEAPON:
-                    break; //Come back and figure how to use this later
-            }
+        if(consumableInventory.containsKey(item)) {
             int newValue = consumableInventory.get(item) - 1;
-            if(newValue == 0){
-                consumableInventory.remove(item);
+            if (item.getUsableType() == ItemUsableType.HEALTH_POTION) {
+                if (newValue == 0) {
+                    consumableInventory.remove(item);
+                } else {
+                    consumableInventory.put(item, newValue);
+                }
+
+                if (currentHP + item.use() > maxHP) {
+                    currentHP = maxHP;
+                } else {
+                    currentHP += item.use();
+                }
+            } else {
+                if (newValue == 0) {
+                    consumableInventory.remove(item);
+                } else {
+                    consumableInventory.put(item, newValue);
+                }
             }
-            else{
-                consumableInventory.put(item, newValue);
-            }
-        }
-        else{
-            System.out.println("You don't own that item");
         }
     }
 
-    public void checkInventoryConsumable(){
-        for(ItemUsable item : consumableInventory.keySet()){
-
-        }
+    public Map<ItemUsable, Integer> checkInventoryConsumable(){
+        return consumableInventory;
     }
 
-    public void checkInventoryWeapon(){
-        if(weaponInventory.isEmpty()){
-            System.out.println("You don't have any stored weapon");
-        }
-        else{
-            System.out.println("You owned: ");
-            for(ItemWeapon item : weaponInventory){
-                System.out.println(" - " + item.getName());
-            }
-        }
+    public List<ItemWeapon> checkInventoryWeapon(){
+        return weaponInventory;
     }
 
     public void pickUpConsumable(ItemUsable item){

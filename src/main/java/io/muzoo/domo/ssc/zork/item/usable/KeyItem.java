@@ -10,8 +10,13 @@ public class KeyItem extends ItemUsable {
         this.usableType = itemType;
     }
 
-    public void use(){
+    public int use(){
+        return -1;
+    }
 
+    @Override
+    public void getInfo(){
+        System.out.println("Item name: " + itemName);
     }
 
 }

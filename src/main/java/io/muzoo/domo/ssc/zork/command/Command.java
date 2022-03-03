@@ -9,8 +9,6 @@ public abstract class Command {
     //The game start when the command "play" has been called
     ZorkMap map;
     Player player;
-    ParserAndProcessor parser;
-    boolean currentGameStatus;
 
 
 

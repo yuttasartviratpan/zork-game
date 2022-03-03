@@ -3,7 +3,6 @@ package io.muzoo.domo.ssc.zork.map;
 import io.muzoo.domo.ssc.zork.item.Item;
 
 public class RoomWithItem extends Room{
-    Item item;
 
     public RoomWithItem(String roomName, String roomDescription){
         this.roomName = roomName;
@@ -14,7 +13,4 @@ public class RoomWithItem extends Room{
         this.item = item;
     }
 
-    public Item getItem(){
-        return item;
-    }
 }

@@ -1,5 +1,10 @@
 package io.muzoo.domo.ssc.zork.map.map1;
 
+import io.muzoo.domo.ssc.zork.character.Monster;
+import io.muzoo.domo.ssc.zork.item.ItemUsableType;
+import io.muzoo.domo.ssc.zork.item.usable.HealthPotion;
+import io.muzoo.domo.ssc.zork.item.usable.KeyItem;
+import io.muzoo.domo.ssc.zork.item.usable.ThrowingKnives;
 import io.muzoo.domo.ssc.zork.map.*;
 
 import java.util.ArrayList;
@@ -119,7 +124,7 @@ public class MapOneGeneration {
         secondFloorRoom.add(7, secondFloorBlock);
         secondFloorRoom.add(8, eastHallwayBlock);
 
-        //itemAndMonsterSpawning();
+        itemAndMonsterSpawning();
     }
 
     //Room connection
@@ -135,6 +140,7 @@ public class MapOneGeneration {
         storageRoomBlock.setNextRoom(null, null, kitchenRoomBlock, null);
         secondFloorBlock.setNextRoom(northHallwayBlock, mainHallBlock, westHallwayBlock, eastHallwayBlock);
         secondFloorBlock.setConnectsToElevatedRoom("south");
+
         //2nd floor
         westHallwayBlock.setNextRoom(scottRoomBlock, null, null, secondFloorBlock);
         eastHallwayBlock.setNextRoom(abenaRoomBlock, null, secondFloorBlock, null);
@@ -146,12 +152,15 @@ public class MapOneGeneration {
         abenaRoomBlock.setNextRoom(null, eastHallwayBlock, northHallwayBlock, null);
     }
 
-    /*
+
     private void itemAndMonsterSpawning(){
         //Room with item
-        westGardenBlock.setItem();
-        storageRoomBlock.setItem();
-        eastHallwayBlock.setItem();
+        westGardenBlock.setItem(new KeyItem("Memorial Picture No.1", "The first piece of " +
+                "nostalgic photo. You can see the big spacious house and the black hair of two person", ItemUsableType.KEY_ITEM));
+        storageRoomBlock.setItem(new KeyItem("Memorial Picture No.2", "The second piece of " +
+                "nostalgic photo. You can see a colorful rose garden and a black hair of a girl", ItemUsableType.KEY_ITEM));
+        eastHallwayBlock.setItem(new KeyItem("Memorial Picture No.3", "The third piece of " +
+                "nostalgic photo. You can see your own face before a house", ItemUsableType.KEY_ITEM));
 
         //Room with monster
         mainHallBlock.setMonster((new Monster()));
@@ -160,13 +169,23 @@ public class MapOneGeneration {
         endNorthHallwayBlock.setMonster((new Monster()));
 
         //Room with both
-        livingRoomBlock.setItemAndMonster(, (new Monster()));
-        scottRoomBlock.setItemAndMonster(, (new Monster()));
-        mayaRoomBlock.setItemAndMonster(, (new Monster()));
-        rohanRoomBlock.setItemAndMonster(, (new Monster()));
-        abenaRoomBlock.setItemAndMonster(, (new Monster()));
+        livingRoomBlock.setItemAndMonster(new ThrowingKnives("throwing-knife",
+                        "A small knife, it would be better to use for throwing",
+                ItemUsableType.THROWABLE_WEAPON), (new Monster()));
+        scottRoomBlock.setItemAndMonster(new HealthPotion("health-potion",
+                "A liquid bottle of your favorite drink, apparently it heals your wound",
+                ItemUsableType.HEALTH_POTION), (new Monster()));
+        mayaRoomBlock.setItemAndMonster(new KeyItem("Memorial Picture No.4", "The fourth piece of " +
+                "nostalgic photo. You can see the face of nostalgic girl. Such that you want to forgot what happened"
+                        , ItemUsableType.KEY_ITEM), (new Monster()));
+        rohanRoomBlock.setItemAndMonster(new ThrowingKnives("throwing-knife",
+                "A small knife, it would be better to use for throwing",
+                ItemUsableType.THROWABLE_WEAPON), (new Monster()));
+        abenaRoomBlock.setItemAndMonster(new ThrowingKnives("throwing-knife",
+                "A small knife, it would be better to use for throwing",
+                ItemUsableType.THROWABLE_WEAPON), (new Monster()));
     }
-    */
+
 
     public void playerMoveIntoRoom(Room room){
         room.setPlayerIsInRoom(true);

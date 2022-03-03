@@ -42,7 +42,7 @@ public class AllCommandList {
         numberOfArgumentInCommand.put("exit", 0);
         numberOfArgumentInCommand.put("equip", 1);
         numberOfArgumentInCommand.put("stats", 0);
-        numberOfArgumentInCommand.put("inventory", 0);
+        numberOfArgumentInCommand.put("inventory", 1);
 
         allCommandInfo.put("info", "Get the information of the room, monsters and items (if any in the room)");
         allCommandInfo.put("take", "Take all items that are in the room you're in");

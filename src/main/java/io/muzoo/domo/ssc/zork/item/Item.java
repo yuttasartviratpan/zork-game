@@ -1,4 +1,6 @@
 package io.muzoo.domo.ssc.zork.item;
 
-public interface Item {
+public abstract class Item {
+    public abstract void getInfo();
+    public abstract Class getItemClass();
 }

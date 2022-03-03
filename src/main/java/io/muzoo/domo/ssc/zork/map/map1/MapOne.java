@@ -1,13 +1,13 @@
 package io.muzoo.domo.ssc.zork.map.map1;
 
+import io.muzoo.domo.ssc.zork.character.Monster;
+import io.muzoo.domo.ssc.zork.item.Item;
 import io.muzoo.domo.ssc.zork.map.Room;
 import io.muzoo.domo.ssc.zork.map.ZorkMap;
 
 import java.util.List;
 
 public class MapOne implements ZorkMap {
-    //Responsible for managing the victory/defeat condition of the player based on the map
-    //Ex: Collect all 15 object in this map to win. Or maybe defeat all monster to win, etc.
 
     MapOneGeneration map = new MapOneGeneration();
     Room currentRoom;
@@ -15,6 +15,16 @@ public class MapOne implements ZorkMap {
     public MapOne(){
         map.generator();
         currentRoom = map.startBlock;
+    }
+
+    @Override
+    public Monster getMonsterInCurrentRoom(){
+        return currentRoom.getMonster();
+    }
+
+    @Override
+    public Item getItemInCurrentRoom(){
+        return currentRoom.getItem();
     }
 
     @Override

@@ -22,6 +22,10 @@ public abstract class Stats {
         attackPower = powerLevel;
     }
 
+    public int getCurrentHP(){
+        return currentHP;
+    }
+
     public int attackDamage() {
         int attackPotential;
         if(weaponOnHand == null){

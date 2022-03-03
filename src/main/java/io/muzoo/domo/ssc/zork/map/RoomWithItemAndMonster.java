@@ -4,8 +4,7 @@ import io.muzoo.domo.ssc.zork.character.Monster;
 import io.muzoo.domo.ssc.zork.item.Item;
 
 public class RoomWithItemAndMonster extends Room{
-    Monster monster;
-    Item item;
+
 
     public RoomWithItemAndMonster(String roomName, String roomDescription){
         this.roomName = roomName;
@@ -17,11 +16,4 @@ public class RoomWithItemAndMonster extends Room{
         this.monster = monster;
     }
 
-    public Monster getMonster(){
-        return monster;
-    }
-
-    public Item getItem(){
-        return item;
-    }
 }

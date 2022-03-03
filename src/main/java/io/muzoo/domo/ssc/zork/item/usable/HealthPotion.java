@@ -13,6 +13,7 @@ public class HealthPotion extends ItemUsable {
         this.healAmount = 20;
     }
 
+
     public int use(){
         return healAmount;
     }

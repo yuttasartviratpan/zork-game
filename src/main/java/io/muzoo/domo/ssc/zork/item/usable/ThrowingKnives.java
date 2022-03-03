@@ -11,7 +11,7 @@ public class ThrowingKnives extends ItemUsable {
         this.usableType = itemType;
     }
 
-    public void use(){
-
+    public int use(){
+        return 50; //Item damage
     }
 }

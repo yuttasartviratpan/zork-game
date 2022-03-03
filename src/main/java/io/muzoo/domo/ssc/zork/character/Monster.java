@@ -14,6 +14,14 @@ public class Monster extends Stats{
         weaponOnHand = null;
     }
 
+    public void setAggro(boolean state){
+        aggro = state;
+    }
+
+    public boolean getAggro(){
+        return aggro;
+    }
+
     public void setDead(){
         System.out.println("The monster has been defeated");
         isDead = true;
@@ -30,6 +38,20 @@ public class Monster extends Stats{
         else{
             System.out.println("This one is strong. Play safe.");
         }
+    }
+
+    public void StatsInfo(){
+        System.out.println("Monster status: ");
+        System.out.println(" - HP: " + currentHP);
+        if(weaponOnHand != null){
+            System.out.println("The monster currently equipping: " + weaponOnHand.getName());
+            System.out.println(" - attack power: " + attackPower + " (base) + " + weaponOnHand.getAttackPower()
+                    + " (" + weaponOnHand.getName() + ") ");
+        }
+        else{
+            System.out.println(" - attack power: " + attackPower + " (base)");
+        }
+
     }
 
 }
