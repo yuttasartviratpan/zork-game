@@ -44,6 +44,12 @@ public class CommandCenter {
                 return true;
 
             case TAKE:
+                if(isInGame){
+                    new CommandTake(map, player).run();
+                }
+                else{
+                    System.out.println("You cannot use this command while you're outside the map");
+                }
                 return true;
 
             case USE:
