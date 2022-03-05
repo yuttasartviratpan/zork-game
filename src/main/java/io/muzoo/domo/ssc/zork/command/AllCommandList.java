@@ -24,6 +24,7 @@ public class AllCommandList {
         allCommand.put("exit", CommandList.EXIT);
         allCommand.put("equip", CommandList.EQUIP);
         allCommand.put("inventory", CommandList.INVENTORY);
+        allCommand.put("inspect", CommandList.INSPECT);
 
         numberOfArgumentInCommand.put("info", 0);
         numberOfArgumentInCommand.put("take", 1);
@@ -41,6 +42,7 @@ public class AllCommandList {
         numberOfArgumentInCommand.put("exit", 0);
         numberOfArgumentInCommand.put("equip", 1);
         numberOfArgumentInCommand.put("inventory", 1);
+        numberOfArgumentInCommand.put("inspect", 1);
 
         allCommandInfo.put("info", "Get the information of the room, monsters and items (if any in the room)");
         allCommandInfo.put("take", "Take all items that are in the room you're in");
@@ -58,6 +60,7 @@ public class AllCommandList {
         allCommandInfo.put("exit", "Terminate the game");
         allCommandInfo.put("equip", "Equip the specified weapon");
         allCommandInfo.put("inventory", "Check what items you have");
+        allCommandInfo.put("inspect", "Inspect specific item in your inventory");
     }
 
     public Map<String, Integer> getAllNumberOfArgumentInCommand(){

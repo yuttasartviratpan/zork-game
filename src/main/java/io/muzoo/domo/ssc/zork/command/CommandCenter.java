@@ -43,6 +43,17 @@ public class CommandCenter {
                 }
                 return true;
 
+            case INSPECT:
+                if(isInGame){
+                    new CommandMap(map).run();
+                }
+                else{
+                    System.out.println("You cannot use this command while you're outside the map");
+                }
+                return true;
+
+
+
             case TAKE:
                 if(isInGame){
                     new CommandTake(map, player).run();
@@ -475,6 +486,21 @@ class CommandEquip extends Command{
     Player player;
 
     public CommandEquip(Player player, String parameter){
+        this.player = player;
+        this.parameter = parameter;
+
+    }
+
+    public void run(){
+        player.equipWeapon(parameter);
+    }
+}
+
+class CommandInspect extends Command{
+    String parameter;
+    Player player;
+
+    public CommandInspect(Player player, String parameter){
         this.player = player;
         this.parameter = parameter;
 
