@@ -1,5 +1,6 @@
 package io.muzoo.domo.ssc.zork.command;
 
+import io.muzoo.domo.ssc.zork.Game;
 import io.muzoo.domo.ssc.zork.character.Monster;
 import io.muzoo.domo.ssc.zork.character.Player;
 import io.muzoo.domo.ssc.zork.item.ItemUsable;
@@ -8,232 +9,23 @@ import io.muzoo.domo.ssc.zork.item.usable.KeyItem;
 import io.muzoo.domo.ssc.zork.map.AvailableMap;
 import io.muzoo.domo.ssc.zork.map.ZorkMap;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class CommandCenter {
-    ZorkMap map;
-    Player player;
-    boolean isInGame;
 
-    public CommandCenter(ZorkMap map, Player player, boolean isInGame){
-        this.map = map;
-        this.player = player;
-        this.isInGame = isInGame;
-    }
-
-
-    public boolean checkCommand(CommandType commandType, List<String> arguments){
-        switch (commandType){
-            case INFO:
-                if(isInGame){
-                    new CommandInfo(map, player).run();
-                }
-                else{
-                    System.out.println("You cannot use this command while you're outside the map");
-                }
-                return true;
-
-            case MAP:
-                if(isInGame){
-                    new CommandMap(map).run();
-                }
-                else{
-                    System.out.println("You cannot use this command while you're outside the map");
-                }
-                return true;
-
-            case INSPECT:
-                if(isInGame){
-                    new CommandMap(map).run();
-                }
-                else{
-                    System.out.println("You cannot use this command while you're outside the map");
-                }
-                return true;
-
-
-
-            case TAKE:
-                if(isInGame){
-                    new CommandTake(map, player).run();
-                }
-                else{
-                    System.out.println("You cannot use this command while you're outside the map");
-                }
-                return true;
-
-            case USE:
-                if(isInGame){
-                    if(arguments.isEmpty()){
-                        System.out.println("Please specify the item you want to use");
-                    }
-                    else{
-                        new CommandUse(map, player, arguments.get(0)).run();
-                    }
-                }
-                else{
-                    System.out.println("You cannot use this command while you're outside the map");
-                }
-                return true;
-
-            case DROP:
-                if(isInGame){
-                    if(arguments.isEmpty()){
-                        System.out.println("What are we dropping?");
-                    }
-                    else{
-                        (new CommandDrop(player, arguments.get(0))).run();
-                    }
-                }
-                else{
-                    System.out.println("You cannot use this command while you're not in the map");
-                }
-                return true;
-
-            case ATTACK:
-                return true;
-
-            case GO:
-                if(isInGame){
-                    if(arguments.isEmpty()){
-                        System.out.println("Where are we going, tell me");
-                    }
-                    else{
-                        (new CommandGo(map, player, arguments.get(0))).run();
-                    }
-                }
-                else{
-                    System.out.println("You cannot use this command while you're not in the map");
-                }
-                return true;
-
-            case HELP:
-                Map<String, String> allCommand = (new AllCommandList()).getAllCommandInfo();
-                Map<String, Integer> numOfArguments = (new AllCommandList()).getAllNumberOfArgumentInCommand();
-                System.out.println("The available commands are: ");
-                for(String i : allCommand.keySet()){
-                    if(numOfArguments.get(i) > 0){
-                        System.out.print(" - " + i);
-                        commandArgumentCheck(i);
-                        System.out.print(" : " + allCommand.get(i));
-                        System.out.print("\n");
-                    }
-                    else{
-                        System.out.print(" - " + i + " : " + allCommand.get(i));
-                        System.out.print("\n");
-                    }
-
-
-                }
-                return true;
-
-            case QUIT:
-                if(isInGame){
-                    System.out.println("Exiting the map");
-                    isInGame = false;
-                }
-                else{
-                    System.out.println("You are not in any map, use play <map-name> first");
-                }
-                return true;
-
-            case PLAY:
-                Map<String, ZorkMap> allMap = new AvailableMap().getAllMap();
-                if(!isInGame){
-                    if(arguments.isEmpty()){
-                        System.out.println("Please specify the map name you would like to play");
-                        System.out.println("The available map are: ");
-                        for(String mapName : allMap.keySet()){
-                            System.out.println(" - " + mapName);
-                        }
-                    }
-                    else{
-                        map = (new CommandPlay(map, arguments.get(0)).run());
-                        isInGame = true;
-                    }
-                }
-                else{
-                    System.out.println("Quit this map first before you can play other map");
-                }
-                return true;
-
-            case LOAD:
-                return true;
-
-            case SAVE:
-                return true;
-
-            case EXIT:
-                if(isInGame){
-                    System.out.println("You're currently in a map, use quit command first");
-                    return true;
-                }
-                else{
-                    System.out.println("Exiting the program. See your later?");
-                    return false;
-                }
-
-            case EQUIP:
-                if(isInGame){
-                    if(arguments.isEmpty()){
-                        System.out.println("Please enter what weapon to equip, check by typing: ");
-                        System.out.println("\"inventory weapon\"");
-                    }
-                    else{
-                        new CommandEquip(player, arguments.get(0)).run();
-                    }
-                }
-                else{
-                    System.out.println("This command can only be use while in a map");
-                }
-                return true;
-
-            case INVENTORY:
-                if(isInGame){
-                    if(arguments.isEmpty()){
-                        System.out.println("Please enter whether to check item or weapon by typing");
-                        System.out.println("\"inventory weapon\" or \"inventory item\"");
-                    }
-                    else{
-                        new CommandInventory(player, arguments.get(0)).run();
-                    }
-                }
-                else{
-                    System.out.println("This command can only be use while in a map");
-                }
-                return true;
-
-            default:
-                System.out.println("Unknown command. Use \"help\" to view the list of available command.");
-                return true;
-
+    public void checkCommand(CommandType commandType, Game gameState, String arguments) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        if(commandType == null){
+            System.out.println("Unknown command or no command entered. Use \"help\" to view all available command");
         }
-    }
-
-    private void commandArgumentCheck(String command){
-        if(command.equalsIgnoreCase("go")){
-            System.out.print(" <direction>");
+        else if(commandType.getInGameOnly() != gameState.getInGameState() && gameState.getInGameState()){
+            System.out.println("You can't use this command while you're in a map");
         }
-        if(command.equalsIgnoreCase("autopilot")){
-            System.out.print(" <file>");
+        else if(commandType.getInGameOnly() != gameState.getInGameState()){
+            System.out.println("You can't use this command while you're outside a map");
         }
-        if(command.equalsIgnoreCase("play")){
-            System.out.print(" <map-name>");
-        }
-        if(command.equalsIgnoreCase("load")){
-            System.out.print(" <save-point-name>");
-        }
-        if(command.equalsIgnoreCase("save")){
-            System.out.print(" <save-point-name>");
-        }
-        if(command.equalsIgnoreCase("equip")){
-            System.out.print(" <weapon-name>");
-        }
-        if(command.equalsIgnoreCase("drop")){
-            System.out.print(" <item-name>");
-        }
-        if(command.equalsIgnoreCase("use")){
-            System.out.print(" <item-name>");
+        else{
+            commandType.getCommandClass().getDeclaredConstructor().newInstance().run(gameState, arguments);
         }
     }
 
@@ -241,57 +33,47 @@ public class CommandCenter {
 }
 
 class CommandInfo extends Command{
-    ZorkMap map;
-    Player player;
 
-    public CommandInfo(ZorkMap map, Player player){
-        this.map = map;
-        this.player = player;
-    }
-
-    public void run(){
-        player.myStatsInfo();
-        if(map.getMonsterInCurrentRoom() != null){
+    @Override
+    public void run(Game gameState, String argument){
+        gameState.getPlayer().myStatsInfo();
+        if(gameState.getMap().getMonsterInCurrentRoom() != null){
             System.out.println("----------");
             System.out.println("There is a monster in a room");
-            map.getMonsterInCurrentRoom().StatsInfo();
+            gameState.getMap().getMonsterInCurrentRoom().StatsInfo();
         }
-        if(map.getItemInCurrentRoom() != null){
+        if(gameState.getMap().getItemInCurrentRoom() != null){
             System.out.println("----------");
-            if(map.getItemInCurrentRoom().getItemClass().equals(ItemUsable.class)){
-                if(map.getItemInCurrentRoom().getClass().equals(KeyItem.class)){
+            if(gameState.getMap().getItemInCurrentRoom().getItemClass().equals(ItemUsable.class)){
+                if(gameState.getMap().getItemInCurrentRoom().getClass().equals(KeyItem.class)){
                     System.out.println("There's something on the ground");
                 }
                 else{
                     System.out.println("There is a consumable item in this room");
-                    map.getItemInCurrentRoom().getInfo();
+                    gameState.getMap().getItemInCurrentRoom().getInfo();
                 }
             }
-            else if(map.getItemInCurrentRoom().getItemClass().equals(ItemWeapon.class)){
+            else if(gameState.getMap().getItemInCurrentRoom().getItemClass().equals(ItemWeapon.class)){
                 System.out.println("There is a weapon in this room");
-                map.getItemInCurrentRoom().getInfo();
+                gameState.getMap().getItemInCurrentRoom().getInfo();
             }
 
         }
         System.out.println("----------");
-        map.getCurrentRoom().getPathAvailable();
+        gameState.getMap().getCurrentRoom().getPathAvailable();
 
     }
 }
 
 class CommandInventory extends Command{
-    Player player;
-    String argument;
+
     List<ItemWeapon> weaponInventory;
     Map<ItemUsable, Integer> usableInventory;
-    public CommandInventory(Player player, String argument){
-        this.player = player;
-        this.argument = argument;
-    }
 
-    public void run(){
+    @Override
+    public void run(Game gameState, String argument){
         if(argument.equalsIgnoreCase("weapon") || argument.equalsIgnoreCase("weapons")){
-            weaponInventory = player.checkInventoryWeapon();
+            weaponInventory = gameState.getPlayer().checkInventoryWeapon();
             if(weaponInventory.isEmpty()){
                 System.out.println("You don't have any stored weapon");
             }
@@ -303,7 +85,7 @@ class CommandInventory extends Command{
             }
         }
         else if(argument.equalsIgnoreCase("item") || argument.equalsIgnoreCase("items")){
-            usableInventory = player.checkInventoryConsumable();
+            usableInventory = gameState.getPlayer().checkInventoryConsumable();
             if(usableInventory.isEmpty()){
                 System.out.println("You don't have any items");
             }
@@ -322,16 +104,11 @@ class CommandInventory extends Command{
 }
 
 class CommandTake extends Command{
-    ZorkMap map;
-    Player player;
-    public CommandTake(ZorkMap map, Player player){
-        this.map = map;
-        this.player = player;
-    }
 
-    public void run(){
-        if(map.getItemInCurrentRoom() != null){
-            player.pickUpConsumable((ItemUsable) map.getItemInCurrentRoom());
+    @Override
+    public void run(Game gameState, String argument){
+        if(gameState.getMap().getItemInCurrentRoom() != null){
+            gameState.getPlayer().pickUpConsumable((ItemUsable) gameState.getMap().getItemInCurrentRoom());
         }
         else{
             System.out.println("There is no item in this room");
@@ -340,31 +117,25 @@ class CommandTake extends Command{
 }
 
 class CommandUse extends Command{
-    ZorkMap map;
-    Player player;
-    String parameter;
-    ItemUsable itemUsable;
-    public CommandUse(ZorkMap map, Player player, String parameter){
-        this.map = map;
-        this.player = player;
-        this.parameter = parameter;
-    }
 
-    public void run(){
-        if(searchItemUsableUsingString(player.checkInventoryConsumable().keySet(), parameter)){
+    ItemUsable itemUsable;
+
+    @Override
+    public void run(Game gameState, String argument){
+        if(searchItemUsableUsingString(gameState.getPlayer().checkInventoryConsumable().keySet(), argument)){
             switch (itemUsable.getUsableType()){
                 case HEALTH_POTION:
-                    player.usingItem(itemUsable);
+                    gameState.getPlayer().usingItem(itemUsable);
                     System.out.println("Your wounds started to heal");
                     break;
 
                 case THROWABLE_WEAPON:
-                    Monster monster = map.getMonsterInCurrentRoom();
+                    Monster monster = gameState.getMap().getMonsterInCurrentRoom();
                     if(monster == null){
                         System.out.println("There is no monster here, you don't need to use it");
                     }
                     else{
-                        player.usingItem(itemUsable);
+                        gameState.getPlayer().usingItem(itemUsable);
                         monster.setCurrentHP(monster.getCurrentHP() - itemUsable.use());
                         if(monster.checkIfDead()){
                             monster.setDead();
@@ -394,17 +165,11 @@ class CommandUse extends Command{
 }
 
 class CommandDrop extends Command{
-    String parameter;
-    Player player;
 
-    public CommandDrop(Player player, String parameter){
-        this.player = player;
-        this.parameter = parameter;
-    }
-
-    public void run(){
-        if(player.checkForItem(parameter) != null){
-            player.dropItem(player.checkForItem(parameter));
+    @Override
+    public void run(Game gameState, String argument){
+        if(gameState.getPlayer().checkForItem(argument) != null){
+            gameState.getPlayer().dropItem(gameState.getPlayer().checkForItem(argument));
         }
         else{
             System.out.println("Item not found");
@@ -414,110 +179,125 @@ class CommandDrop extends Command{
 
 class CommandAttack extends Command{
 
+    @Override
+    public void run(Game gameState, String argument) {
+
+    }
+
 }
 
 class CommandGo extends Command{
-    String parameter;
-    public CommandGo(ZorkMap map, Player player, String parameter){
-        this.map = map;
-        this.player = player;
-        this.parameter = parameter;
-    }
 
-    public void run(){
-        if(map.getCurrentRoom().getRoom(parameter) == null){
+    @Override
+    public void run(Game gameState, String argument){
+        if(gameState.getMap().getCurrentRoom().getRoom(argument) == null){
             System.out.println("That path doesn't exist");
         }
         else{
-            System.out.println("Moving to: " + map.getCurrentRoom().getRoom(parameter).getRoomName());
-            map.getCurrentRoom().getRoom(parameter).getRoomInfo();
-            map.moving(map.getCurrentRoom(), map.getCurrentRoom().getRoom(parameter));
-            player.nextRoomHeal(10);
+            System.out.println("Moving to: " + gameState.getMap().getCurrentRoom().getRoom(argument).getRoomName());
+            gameState.getMap().getCurrentRoom().getRoom(argument).getRoomInfo();
+            gameState.getMap().moving(gameState.getMap().getCurrentRoom(), gameState.getMap().getCurrentRoom().getRoom(argument));
+            gameState.getPlayer().nextRoomHeal(10);
         }
     }
 }
 
 class CommandMap extends Command{
-    public CommandMap(ZorkMap map){
-        this.map = map;
-    }
 
-    public void run(){
-        map.mapping();
+    @Override
+    public void run(Game gameState, String argument){
+        gameState.getMap().mapping();
     }
 }
 
 class CommandAutoPilot extends Command{
 
-}
-
-class CommandPlay extends Command{
-    String parameter;
-    Map<String, ZorkMap> availableMap = (new AvailableMap()).getAllMap();
-    public CommandPlay(ZorkMap map, String parameter){
-        this.map = map;
-        this.parameter = parameter;
+    @Override
+    public void run(Game gameState, String argument) {
 
     }
 
-    public ZorkMap run(){
-        if(availableMap.get(parameter.toLowerCase()) == null){
+}
+
+class CommandPlay extends Command{
+
+    Map<String, ZorkMap> availableMap = (new AvailableMap()).getAllMap();
+
+
+    @Override
+    public void run(Game gameState, String argument){
+        if(availableMap.get(argument.toLowerCase()) == null){
             System.out.println("There is no map with that name");
-            return null;
+
         }
         else{
-            System.out.println("Map: " + parameter + " loaded");
-            return availableMap.get(parameter.toLowerCase());
+            System.out.println("Map: " + argument + " loaded");
+            gameState.setMap(availableMap.get(argument.toLowerCase()));
+            gameState.setInGameState(true);
         }
     }
 }
 
 class CommandExit extends Command{
 
+    @Override
+    public void run(Game gameState, String argument) {
+        System.out.println("Terminating the program, see you later?");
+        gameState.setGameRunning(false);
+    }
+
+
 }
 
 class CommandQuit extends Command{
+
+    @Override
+    public void run(Game gameState, String argument) {
+        System.out.println("Returning to main menu");
+        gameState.setMap(null);
+        gameState.setInGameState(false);
+    }
 
 }
 
 class CommandHelp extends Command{
 
+    @Override
+    public void run(Game gameState, String argument){
+        System.out.println("The commands are:");
+        CommandType.helpCommandDescriptionPrinting();
+    }
 }
 
 class CommandLoad extends Command{
+
+    @Override
+    public void run(Game gameState, String argument) {
+
+    }
 
 }
 
 class CommandSave extends Command{
 
+    @Override
+    public void run(Game gameState, String argument) {
+
+    }
 }
 
 class CommandEquip extends Command{
-    String parameter;
-    Player player;
 
-    public CommandEquip(Player player, String parameter){
-        this.player = player;
-        this.parameter = parameter;
-
-    }
-
-    public void run(){
-        player.equipWeapon(parameter);
+    @Override
+    public void run(Game gameState, String argument){
+        gameState.getPlayer().equipWeapon(argument);
     }
 }
 
 class CommandInspect extends Command{
-    String parameter;
-    Player player;
 
-    public CommandInspect(Player player, String parameter){
-        this.player = player;
-        this.parameter = parameter;
-
-    }
-
-    public void run(){
-        player.equipWeapon(parameter);
+    @Override
+    public void run(Game gameState, String argument){
+        gameState.getPlayer().equipWeapon(argument);
     }
 }
