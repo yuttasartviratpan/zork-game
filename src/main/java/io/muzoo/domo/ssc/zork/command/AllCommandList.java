@@ -4,27 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AllCommandList {
-    Map<String, CommandList> allCommand = new HashMap<>();
+    Map<String, CommandType> allCommand = new HashMap<>();
     Map<String, String> allCommandInfo = new HashMap<>();
     Map<String, Integer> numberOfArgumentInCommand = new HashMap<>();
     public AllCommandList(){
-        allCommand.put("info", CommandList.INFO);
-        allCommand.put("take", CommandList.TAKE);
-        allCommand.put("use", CommandList.USE);
-        allCommand.put("drop", CommandList.DROP);
-        allCommand.put("attack", CommandList.ATTACK);
-        allCommand.put("go", CommandList.GO);
-        allCommand.put("map", CommandList.MAP);
-        allCommand.put("autopilot", CommandList.AUTOPILOT);
-        allCommand.put("help", CommandList.HELP);
-        allCommand.put("quit", CommandList.QUIT);
-        allCommand.put("play", CommandList.PLAY);
-        allCommand.put("load", CommandList.LOAD);
-        allCommand.put("save", CommandList.SAVE);
-        allCommand.put("exit", CommandList.EXIT);
-        allCommand.put("equip", CommandList.EQUIP);
-        allCommand.put("inventory", CommandList.INVENTORY);
-        allCommand.put("inspect", CommandList.INSPECT);
+        allCommand.put("info", CommandType.INFO);
+        allCommand.put("take", CommandType.TAKE);
+        allCommand.put("use", CommandType.USE);
+        allCommand.put("drop", CommandType.DROP);
+        allCommand.put("attack", CommandType.ATTACK);
+        allCommand.put("go", CommandType.GO);
+        allCommand.put("map", CommandType.MAP);
+        allCommand.put("autopilot", CommandType.AUTOPILOT);
+        allCommand.put("help", CommandType.HELP);
+        allCommand.put("quit", CommandType.QUIT);
+        allCommand.put("play", CommandType.PLAY);
+        allCommand.put("load", CommandType.LOAD);
+        allCommand.put("save", CommandType.SAVE);
+        allCommand.put("exit", CommandType.EXIT);
+        allCommand.put("equip", CommandType.EQUIP);
+        allCommand.put("inventory", CommandType.INVENTORY);
+        allCommand.put("inspect", CommandType.INSPECT);
 
         numberOfArgumentInCommand.put("info", 0);
         numberOfArgumentInCommand.put("take", 1);
@@ -67,7 +67,7 @@ public class AllCommandList {
         return numberOfArgumentInCommand;
     }
 
-    public Map<String, CommandList> getAllCommandList(){
+    public Map<String, CommandType> getAllCommandList(){
         return allCommand;
     }
 

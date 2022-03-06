@@ -3,10 +3,13 @@ package io.muzoo.domo.ssc.zork.command;
 import java.util.*;
 
 public class ParserAndProcessor {
+    /*
+        Check first whether the command is null or not.
+        Print appropriately if it is null
+     */
     Parser parsed = new Parser();
-    boolean inGameState = false;
-    CommandList command;
-    List<String> arguments;
+    CommandType command;
+    String arguments;
 
     public void run(){
         parsed.parser();
@@ -14,65 +17,75 @@ public class ParserAndProcessor {
         arguments = parsed.arguments;
     }
 
-    public CommandList getCommand(){
+    public CommandType getCommandType(){
         return command;
     }
 
-    public List<String> getArguments(){
+    public String getCommandString(){
+        if(command == null){
+            System.out.println("Unknown command or no command entered");
+            return "null";
+        }
+        return command.getCommandString();
+    }
+
+    public Class<? extends Command> getCommandClass(){
+        return command.getCommandClass();
+    }
+
+    public String getArguments(){
         return arguments;
     }
 
-    private void checkArgument(){ //Delete this when actually implemented Commands
-        if(parsed.arguments.isEmpty()){
-            System.out.println("No argument were given");
-        }
-        else{
-            for (String argument : parsed.arguments) {
-                System.out.println("- " + argument);
-            }
-        }
+    public void checkArgument(){ //Delete this when actually implemented Commands
+        System.out.println("Argument = " + arguments);
     }
 
 }
 
 class Parser{
     String command;
-    CommandList processedCommand;
-    List<String> arguments;
-
-    Map<String, CommandList> allCommand = (new AllCommandList()).getAllCommandList();
-    Map<String, Integer> numberOfArgumentInCommand = (new AllCommandList()).getAllNumberOfArgumentInCommand();
+    CommandType processedCommand;
+    String arguments;
 
     public void parser(){
         Scanner userInput = new Scanner(System.in);
         if(userInput.hasNextLine()){
             command = userInput.nextLine();
         }
-        arguments = new ArrayList<>();
+        arguments = "";
         getCommand(command);
     }
 
     private void getCommand(String inputtedText) {
-        //Parse the first String entered as a command
-        Scanner text = new Scanner(inputtedText);
-        if(!text.hasNext()){
-            processedCommand = CommandList.EMPTY;
+        inputtedText = inputtedText.trim();
+
+        /*
+            Split the string on the first occurrence of " ".
+            So, there should be only at most length 2 array of String
+         */
+        String[] parsedString = inputtedText.split(" ", 2);
+
+        if(parsedString.length == 0){
+            processedCommand = null;
         }
-        else{
-            String parsedCommand = text.next().toLowerCase();
-            if(numberOfArgumentInCommand.containsKey(parsedCommand)){
-                if(numberOfArgumentInCommand.get(parsedCommand) == 0){
-                    processedCommand = allCommand.get(parsedCommand);
-                }
-                else if(numberOfArgumentInCommand.get(parsedCommand) == 1){
-                    processedCommand = allCommand.get(parsedCommand);
-                    if(text.hasNext()){
-                        arguments.add(text.next());
-                    }
-                }
+        else if(parsedString.length == 1){
+            String commandString = parsedString[0].toLowerCase();
+            if(CommandType.checkCommandString(commandString)){
+                processedCommand = CommandType.getCommandType(commandString);
             }
             else{
-                processedCommand = CommandList.NOTFOUND;
+                processedCommand = null;
+            }
+        }
+        else{
+            String commandString = parsedString[0].toLowerCase();
+            arguments = parsedString[1];
+            if(CommandType.checkCommandString(commandString)){
+                processedCommand = CommandType.getCommandType(commandString);
+            }
+            else{
+                processedCommand = null;
             }
         }
     }

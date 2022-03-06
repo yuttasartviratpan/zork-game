@@ -2,7 +2,6 @@ package io.muzoo.domo.ssc.zork.command;
 
 import io.muzoo.domo.ssc.zork.character.Monster;
 import io.muzoo.domo.ssc.zork.character.Player;
-import io.muzoo.domo.ssc.zork.item.Item;
 import io.muzoo.domo.ssc.zork.item.ItemUsable;
 import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 import io.muzoo.domo.ssc.zork.item.usable.KeyItem;
@@ -23,7 +22,7 @@ public class CommandCenter {
     }
 
 
-    public boolean checkCommand(CommandList commandType, List<String> arguments){
+    public boolean checkCommand(CommandType commandType, List<String> arguments){
         switch (commandType){
             case INFO:
                 if(isInGame){
@@ -322,7 +321,7 @@ class CommandInventory extends Command{
 
 }
 
-class CommandTake{
+class CommandTake extends Command{
     ZorkMap map;
     Player player;
     public CommandTake(ZorkMap map, Player player){
@@ -340,7 +339,7 @@ class CommandTake{
     }
 }
 
-class CommandUse{
+class CommandUse extends Command{
     ZorkMap map;
     Player player;
     String parameter;
@@ -394,7 +393,7 @@ class CommandUse{
     }
 }
 
-class CommandDrop{
+class CommandDrop extends Command{
     String parameter;
     Player player;
 
@@ -413,7 +412,7 @@ class CommandDrop{
     }
 }
 
-class CommandAttack{
+class CommandAttack extends Command{
 
 }
 
@@ -448,7 +447,7 @@ class CommandMap extends Command{
     }
 }
 
-class CommandAutoPilot{
+class CommandAutoPilot extends Command{
 
 }
 
@@ -473,11 +472,23 @@ class CommandPlay extends Command{
     }
 }
 
-class CommandLoad{
+class CommandExit extends Command{
 
 }
 
-class CommandSave{
+class CommandQuit extends Command{
+
+}
+
+class CommandHelp extends Command{
+
+}
+
+class CommandLoad extends Command{
+
+}
+
+class CommandSave extends Command{
 
 }
 

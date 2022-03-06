@@ -2,7 +2,7 @@ package io.muzoo.domo.ssc.zork;
 
 import io.muzoo.domo.ssc.zork.character.Player;
 import io.muzoo.domo.ssc.zork.command.CommandCenter;
-import io.muzoo.domo.ssc.zork.command.CommandList;
+import io.muzoo.domo.ssc.zork.command.CommandType;
 import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
 import io.muzoo.domo.ssc.zork.map.ZorkMap;
 
@@ -14,7 +14,7 @@ public class Game {
     CommandCenter command;
     ParserAndProcessor parser;
     boolean inGame = false; //Is the player in the Map, playing the game.
-    CommandList commandList;
+    CommandType commandType;
     List<String> arguments;
 
 
@@ -31,10 +31,10 @@ public class Game {
         ParserAndProcessor game_instance = new ParserAndProcessor();
         while(running){
             game_instance.run();
-            commandList = game_instance.getCommand();
-            arguments = game_instance.getArguments();
+            //commandType = game_instance.getCommand();
+            //arguments = game_instance.getArguments();
 
-            running = command.checkCommand(commandList, arguments);
+            running = command.checkCommand(commandType, arguments);
         }
     }
 }
