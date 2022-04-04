@@ -1,7 +1,5 @@
 package io.muzoo.domo.ssc.zork.character;
 
-import io.muzoo.domo.ssc.zork.item.ItemWeapon;
-
 import java.util.Random;
 
 public abstract class Stats {

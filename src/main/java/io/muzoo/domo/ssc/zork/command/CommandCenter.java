@@ -3,8 +3,6 @@ package io.muzoo.domo.ssc.zork.command;
 import io.muzoo.domo.ssc.zork.Game;
 import io.muzoo.domo.ssc.zork.character.Monster;
 import io.muzoo.domo.ssc.zork.character.Player;
-import io.muzoo.domo.ssc.zork.item.ItemUsable;
-import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 import io.muzoo.domo.ssc.zork.item.usable.KeyItem;
 import io.muzoo.domo.ssc.zork.map.AvailableMap;
 import io.muzoo.domo.ssc.zork.map.ZorkMap;
@@ -36,11 +34,13 @@ class CommandInfo extends Command{
 
     @Override
     public void run(Game gameState, String argument){
-        gameState.getPlayer().myStatsInfo();
+        gameState.getMap().getPlayer().myStatsInfo();
         if(gameState.getMap().getMonsterInCurrentRoom() != null){
-            System.out.println("----------");
-            System.out.println("There is a monster in a room");
-            gameState.getMap().getMonsterInCurrentRoom().StatsInfo();
+            if(!gameState.getMap().getMonsterInCurrentRoom().checkIfDead()){
+                System.out.println("----------");
+                System.out.println("There is a monster in a room");
+                gameState.getMap().getMonsterInCurrentRoom().StatsInfo();
+            }
         }
         if(gameState.getMap().getItemInCurrentRoom() != null){
             System.out.println("----------");
@@ -73,7 +73,7 @@ class CommandInventory extends Command{
     @Override
     public void run(Game gameState, String argument){
         if(argument.equalsIgnoreCase("weapon") || argument.equalsIgnoreCase("weapons")){
-            weaponInventory = gameState.getPlayer().checkInventoryWeapon();
+            weaponInventory = gameState.getMap().getPlayer().checkInventoryWeapon();
             if(weaponInventory.isEmpty()){
                 System.out.println("You don't have any stored weapon");
             }
@@ -85,7 +85,7 @@ class CommandInventory extends Command{
             }
         }
         else if(argument.equalsIgnoreCase("item") || argument.equalsIgnoreCase("items")){
-            usableInventory = gameState.getPlayer().checkInventoryConsumable();
+            usableInventory = gameState.getMap().getPlayer().checkInventoryConsumable();
             if(usableInventory.isEmpty()){
                 System.out.println("You don't have any items");
             }
@@ -108,7 +108,7 @@ class CommandTake extends Command{
     @Override
     public void run(Game gameState, String argument){
         if(gameState.getMap().getItemInCurrentRoom() != null){
-            gameState.getPlayer().pickUpConsumable((ItemUsable) gameState.getMap().getItemInCurrentRoom());
+            gameState.getMap().getPlayer().pickUpConsumable((ItemUsable) gameState.getMap().getItemInCurrentRoom());
         }
         else{
             System.out.println("There is no item in this room");
@@ -122,10 +122,10 @@ class CommandUse extends Command{
 
     @Override
     public void run(Game gameState, String argument){
-        if(searchItemUsableUsingString(gameState.getPlayer().checkInventoryConsumable().keySet(), argument)){
+        if(searchItemUsableUsingString(gameState.getMap().getPlayer().checkInventoryConsumable().keySet(), argument)){
             switch (itemUsable.getUsableType()){
                 case HEALTH_POTION:
-                    gameState.getPlayer().usingItem(itemUsable);
+                    gameState.getMap().getPlayer().usingItem(itemUsable);
                     System.out.println("Your wounds started to heal");
                     break;
 
@@ -135,7 +135,7 @@ class CommandUse extends Command{
                         System.out.println("There is no monster here, you don't need to use it");
                     }
                     else{
-                        gameState.getPlayer().usingItem(itemUsable);
+                        gameState.getMap().getPlayer().usingItem(itemUsable);
                         monster.setCurrentHP(monster.getCurrentHP() - itemUsable.use());
                         if(monster.checkIfDead()){
                             monster.setDead();
@@ -168,8 +168,8 @@ class CommandDrop extends Command{
 
     @Override
     public void run(Game gameState, String argument){
-        if(gameState.getPlayer().checkForItem(argument) != null){
-            gameState.getPlayer().dropItem(gameState.getPlayer().checkForItem(argument));
+        if(gameState.getMap().getPlayer().checkForItem(argument) != null){
+            gameState.getMap().getPlayer().dropItem(gameState.getMap().getPlayer().checkForItem(argument));
         }
         else{
             System.out.println("Item not found");
@@ -181,7 +181,16 @@ class CommandAttack extends Command{
 
     @Override
     public void run(Game gameState, String argument) {
-
+        Player player = gameState.getMap().getPlayer();
+        Monster monster = gameState.getMap().getMonsterInCurrentRoom();
+        System.out.println("You attacked the monster!");
+        monster.setCurrentHP(monster.getCurrentHP() - player.attackDamage());
+        if(monster.checkIfDead()){
+            monster.setDead();
+        }
+        if(player.checkIfDead()){
+            player.setDead();
+        }
     }
 
 }
@@ -197,7 +206,7 @@ class CommandGo extends Command{
             System.out.println("Moving to: " + gameState.getMap().getCurrentRoom().getRoom(argument).getRoomName());
             gameState.getMap().getCurrentRoom().getRoom(argument).getRoomInfo();
             gameState.getMap().moving(gameState.getMap().getCurrentRoom(), gameState.getMap().getCurrentRoom().getRoom(argument));
-            gameState.getPlayer().nextRoomHeal(10);
+            gameState.getMap().getPlayer().nextRoomHeal(10);
         }
     }
 }
@@ -290,7 +299,7 @@ class CommandEquip extends Command{
 
     @Override
     public void run(Game gameState, String argument){
-        gameState.getPlayer().equipWeapon(argument);
+        gameState.getMap().getPlayer().equipWeapon(argument);
     }
 }
 
@@ -298,6 +307,15 @@ class CommandInspect extends Command{
 
     @Override
     public void run(Game gameState, String argument){
-        gameState.getPlayer().equipWeapon(argument);
+        gameState.getMap().getPlayer().equipWeapon(argument);
     }
 }
+
+//Inspect is broken, ofc
+//Item are used (at least the print is there) when using item you dont have (zero, but entity exist in HashMap).
+//
+// To implement:
+// - Item in the room should not be consumable only. (Also, more than 1 item if possible)
+// - Turn based system? (Current you could do when you attack, the monster also attack you simultaneously)
+//   - This is such that throwing knife can be use to attack, but will not consume a turn.
+// - Item/Weapon name should be change to include <space>. Also when compared, it should ignore case, but display title case.

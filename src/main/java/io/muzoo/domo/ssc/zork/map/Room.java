@@ -1,170 +1,92 @@
 package io.muzoo.domo.ssc.zork.map;
 
+//import io.muzoo.domo.ssc.zork.character.Monster;
+//import io.muzoo.domo.ssc.zork.item.Item;
+
 import io.muzoo.domo.ssc.zork.character.Monster;
 import io.muzoo.domo.ssc.zork.item.Item;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class Room {
-    String roomName;
-    String roomDescription;
-    boolean isPlayerCurrentlyIn;
-    String connectsToElevatedRoomDirection = null;
-    Monster monster = null;
-    Item item = null;
-    Map<String, Room> nextRoom = new HashMap<>();
+public class Room {
 
-    public void getRoomInfo() {
-        System.out.println(roomDescription);
+    private String roomName;
+    private String roomDescription;
+    private int floorNum;
+    private Map<String, Room> neighbor = new HashMap<>();
+    private boolean playerIsHere;
+    private Item itemInRoom = null;
+    private Monster monsterInRoom = null;
+
+
+    public Room(String roomName, String roomDescription, int floorNum){
+        this.roomName = roomName;
+        this.roomDescription = roomDescription;
+        this.floorNum = floorNum;
     }
 
-    public void getPathAvailable(){
-        if(nextRoom.isEmpty()){
-            System.out.println("There are no doors, this room is a dead end");
+    public void setNeighbor(Room north, Room east, Room west, Room south, Room up, Room down){
+        if(north != null){
+            neighbor.put("north", north);
         }
-        else{
-            System.out.print("The available paths in \"" + roomName + "\" are:");
-            for(Map.Entry<String, Room> possibleDoor : nextRoom.entrySet()){
-                if(nextRoom.get(possibleDoor.getKey()) != null ){
-                    System.out.print(" " + possibleDoor.getKey());
-                }
-            }
-            System.out.print(".\n");
+        if(east != null){
+            neighbor.put("east", east);
         }
-    }
-
-    public Monster getMonster() {
-        return monster;
-    }
-
-    public Item getItem(){
-        return item;
-    }
-
-    public void setConnectsToElevatedRoom(String direction) {
-        connectsToElevatedRoomDirection = direction;
-    }
-
-    private boolean isConnectedToElevatedRoomAtThatDirection(String direction){
-        if(connectsToElevatedRoomDirection == null){
-            return false;
+        if(west != null){
+            neighbor.put("west", west);
         }
-        else return connectsToElevatedRoomDirection.equalsIgnoreCase(direction);
+        if(south != null){
+            neighbor.put("south", south);
+        }
+        if(up != null){
+            neighbor.put("up", up);
+        }
+        if(down != null){
+            neighbor.put("down", down);
+        }
+
     }
 
-    public Room getRoom(String direction){
-        String newDirection = direction.toLowerCase();
-        return nextRoom.get(newDirection);
-    }
+//    public void setItemInRoom(Item item){
+//        itemInRoom = item;
+//    }
+
+//    public void setMonsterInRoom(Monster monster){
+//        monsterInRoom = monster;
+//    }
 
     public String getRoomName(){
         return roomName;
     }
 
-    public void setNextRoom(Room northRoom, Room southRoom, Room westRoom, Room eastRoom) {
-        nextRoom.put("north", northRoom);
-        nextRoom.put("south", southRoom);
-        nextRoom.put("west", westRoom);
-        nextRoom.put("east", eastRoom);
+    public String getRoomDescription() {return roomDescription;}
+
+    public Monster getMonsterInRoom(){
+        return monsterInRoom;
     }
 
-    public void setPlayerIsInRoom(boolean isInRoom) {
-        isPlayerCurrentlyIn = isInRoom;
+    public Item getItemInRoom(){
+        return itemInRoom;
     }
 
-    public boolean isPlayerInTheRoom() {
-        return isPlayerCurrentlyIn;
+    public void setMonsterInRoom(Monster monsterInRoom){
+        this.monsterInRoom = monsterInRoom;
     }
 
-    public void drawMapAt(int index) {
-        List<List<String>> mapping = drawMap();
-        for(String i : mapping.get(index)){
-            System.out.print(i);
+    public void setItemInRoom(Item itemInRoom){
+        this.itemInRoom = itemInRoom;
+    }
+
+    public void setPlayerIsHere(boolean playerIsHere){
+        this.playerIsHere = playerIsHere;
+    }
+
+    public void printAvailablePath(){
+        System.out.println("The available paths are: ");
+        for(String direction : neighbor.keySet()){
+            System.out.println(direction.toUpperCase() + ": " + neighbor.get(direction).getRoomName());
         }
     }
-
-    //A really stupidly memory inefficient way of drawing map
-    private List<List<String>> drawMap(){ //In total, each room should take 5 by 5 space
-
-        List<List<String>> mapRoom = new ArrayList<>(); //
-        List<String> structure = new ArrayList<>();
-        for(int i = 0; i < 5; i++) {
-            for(int j = 0; j < 5; j++) {
-                if(i == 0) {
-                    if(j == 2 && nextRoom.get("north") != null &&
-                            isConnectedToElevatedRoomAtThatDirection("north")) {
-                        structure.add("0");
-                    }
-                    else if(j == 2 && nextRoom.get("north") != null){
-                        structure.add("|");
-                    }
-                    else {
-                        structure.add(" ");
-                    }
-                }
-                else if(i == 1 || i == 3) {
-                    if(j == 0 || j == 4) {
-                        structure.add(" ");
-                    }
-                    else {
-                        structure.add("-");
-                    }
-                }
-                else if(i == 2) {
-                    if(j == 0){
-                        if(nextRoom.get("west") != null &&
-                                isConnectedToElevatedRoomAtThatDirection("west")){
-                            structure.add("0");
-                        }
-                        else if((nextRoom.get("west") != null)){
-                            structure.add("-");
-                        }
-                        else{
-                            structure.add(" ");
-                        }
-                    }
-                    if(j == 1 || j == 3){
-                        structure.add("|");
-                    }
-                    if(j == 2){
-                        if(isPlayerCurrentlyIn){
-                            structure.add("X");
-                        }
-                        else{
-                            structure.add(" ");
-                        }
-                    }
-                    if(j == 4){
-                        if(nextRoom.get("east") != null &&
-                                isConnectedToElevatedRoomAtThatDirection("east")){
-                            structure.add("0");
-                        }
-                        else if(nextRoom.get("east") != null){
-                            structure.add("-");
-                        }
-                        else{
-                            structure.add(" ");
-                        }
-                    }
-                }
-                else {
-                    if(j == 2 && nextRoom.get("south") != null &&
-                            isConnectedToElevatedRoomAtThatDirection("south")) {
-                        structure.add("0");
-                    }
-                    else if(j == 2 && nextRoom.get("south") != null){
-                        structure.add("|");
-                    }
-                    else {
-                        structure.add(" ");
-                    }
-                }
-            }
-            mapRoom.add(structure);
-            structure = new ArrayList<>();
-        }
-        return mapRoom;
-    }
-
 
 }

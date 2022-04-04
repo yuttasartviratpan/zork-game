@@ -1,0 +1,44 @@
+.map
+Mansion Entrance\.The mansion's entrance. The big old rusty iron gate stood next to you.\.0
+Green House\.The mansion's greenhouse. It houses many type of fruits and vegetables. Sadly, they're all withered and dead.\.0
+Gardening Tool House\.The mansion's storage house for gardening tools. Some tools look new, but many look rusty and weakened.\.0
+Main Lobby\.The mansion's lobby. It's quite large, clean and spacious if you ignore all the ruined furniture, floors, walls and ceiling.\.0
+Dining Area\.The mansion's dining area. The area is filled with broken plates and glass.\.0
+Living Room\.The mansion's living room. A very spacious room, even with all these ruined furniture doesn't make the living room looked any smaller.\.0
+Toilet\.The mansion's unisex toilet. The room size looked as if this is a bathroom and a toilet in one room.\.0
+Kitchen\.The mansion's kitchen. There are ruined stoves, oven, and refrigerator. How wasteful.\.0
+Food Storage Room\.The storage room next to the kitchen. A sniff foul smell of rotten food product is here. Better not stay for too long.\.0
+Backyard\.A widely large backyard. It's overgrown with grass and vines.\.0
+2nd Floor's Hallway\.A hallway between the stair to the second floor. The path looks dark and empty.\.1
+West Hallway\.A walkway to the west of 2nd floor's hallway.\.1
+East Hallway\.A walkway to the east of 2nd floor's hallway.\.1
+2nd Floor's Living Room\.The mansion's second living room. A lot of broken chairs could be seen in the room.\.1
+Veronica's Room\.A person's room. The nameplate on the door stated "Veronica".\.1
+Veronica's Toilet\.A toilet that is next to Veronica's room. It looks cleanly empty\.1
+Sebastian's Room\.A person's room. The nameplate on the door state "Sebastian".\.1
+Sebastian's Toilet\.A toilet that is next to Sebastian's room. It looks very messy and moss filled.\.1
+Chemical Storage's Room\.A room under tool house. It contains a lot of dangerous substance.\.-1
+Kitchenware Storage's Room\.A room under food storage room. It has a lot of variety of kitchen's ware.\.-1
+Secret Room\.A hidden room around kitchenware storage room. There are awfully a lot of books and bookshelves.\.-1
+.neighbor
+Mansion Entrance\.Main Lobby\.Gardening Tool House\.Green House\.NULL\.NULL\.NULL
+Green House\.NULL\.Mansion Entrance\.NULL\.NULL\.NULL\.NULL
+Gardening Tool House\.NULL\.NULL\.Mansion Entrance\.NULL\.NULL\.NULL
+Main Lobby\.Toilet\.Living Room\.Dining Room\.Mansion Entrance\.2nd Floor's Hallway\.NULL
+Dining Area\.Kitchen\.Main Lobby\.NULL\.NULL\.NULL\.NULL
+Living Room\.NULL\.NULL\.Main Lobby\.NULL\.NULL\.NULL
+Toilet\.NULL\.NULL\.NULL\.Main Lobby\.NULL\.NULL
+Kitchen\.Backyard\.Food Storage Room\.NULL\.Main Lobby\.NULL\.NULL
+Food Storage Room\.NULL\.NULL\.Kitchen\.NULL\.NULL\.Kitchenware Storage's Room
+Backyard\.NULL\.NULL\.NULL\.Kitchen\.NULL\.NULL
+2nd Floor's Hallway\.2nd Floor's Living Room\.NULL\.NULL\.NULL\.NULL\.Main Lobby
+West Hallway\.Veronica's Room\.2nd Floor's Hallway\.NULL\.NULL\.NULL\.NULL
+East Hallway\.Sebastian's Room\.NULL\.2nd Floor's Hallway\.NULL\.NULL\.NULL
+2nd Floor's Living Room\.NULL\.NULL\.NULL\.2nd Floor's Hallway\.NULL\.NULL
+Veronica's Room\.NULL\.NULL\.Veronica's Toilet\.West Hallway\.NULL\.NULL
+Veronica's Toilet\.NULL\.Veronica's Room\.NULL\.NULL\.NULL\.NULL
+Sebastian's Room\.NULL\.Sebastian's Toilet\.NULL\.East Hallway\.NULL\.NULL
+Sebastian's Toilet\.NULL\.NULL\.Sebastian's Room\.NULL\.NULL\.NULL
+Chemical Storage's Room\.NULL\.NULL\.NULL\.NULL\.Gardening Tool House\.NULL
+Kitchenware Storage's Room\.NULL\.NULL\.NULL\.Secret Room\.Food Storage Room\.NULL
+Secret Room\.Kitchenware Storage's Room\.NULL\.NULL\.NULL\.NULL\.NULL

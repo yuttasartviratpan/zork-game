@@ -1,13 +1,5 @@
 package io.muzoo.domo.ssc.zork.character;
 
-import io.muzoo.domo.ssc.zork.item.ItemUsable;
-import io.muzoo.domo.ssc.zork.item.ItemUsableType;
-import io.muzoo.domo.ssc.zork.item.ItemWeapon;
-import io.muzoo.domo.ssc.zork.item.usable.HealthPotion;
-import io.muzoo.domo.ssc.zork.item.weapon.FryingPan;
-import io.muzoo.domo.ssc.zork.item.weapon.ShortSword;
-import io.muzoo.domo.ssc.zork.item.weapon.WoodenClub;
-
 import java.util.*;
 
 
@@ -24,10 +16,6 @@ public class Player extends Stats{
         gameOver = false;
         consumableInventory = new HashMap<>();
         weaponInventory = new ArrayList<>();
-        //For testing
-        weaponInventory.add(new WoodenClub());
-        weaponInventory.add(new FryingPan());
-        weaponInventory.add(new ShortSword());
     }
 
     public void equipWeapon(String weapon){

@@ -1,17 +1,14 @@
 package io.muzoo.domo.ssc.zork;
 
-import io.muzoo.domo.ssc.zork.character.Player;
 import io.muzoo.domo.ssc.zork.command.CommandCenter;
 import io.muzoo.domo.ssc.zork.command.CommandType;
 import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
 import io.muzoo.domo.ssc.zork.map.ZorkMap;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 public class Game {
     ZorkMap map;
-    Player player;
     CommandCenter command;
     ParserAndProcessor parser;
     boolean inGame = false;
@@ -22,10 +19,10 @@ public class Game {
 
     public Game(){
         map = null;
-        player = new Player();
         parser = new ParserAndProcessor();
         command = new CommandCenter();
     }
+
 
     public boolean getInGameState(){
         return inGame;
@@ -33,10 +30,6 @@ public class Game {
 
     public void setInGameState(boolean state){
         inGame = state;
-    }
-
-    public Player getPlayer(){
-        return player;
     }
 
     public ZorkMap getMap(){

@@ -1,25 +1,64 @@
 package io.muzoo.domo.ssc.zork.character;
 
-import io.muzoo.domo.ssc.zork.item.ItemWeapon;
+//import io.muzoo.domo.ssc.zork.item.ItemWeapon;
 import java.util.Random;
-public class Monster extends Stats{
+public class Monster{
     Random randomizer = new Random();
     boolean isDead = false;
-    boolean aggro = false;
+    String monsterName;
+    String monsterDescription;
+    int monsterAtk;
+    int monsterMaxHP;
+    int currentHP;
 
-    public Monster(){
-        maxHP = randomizer.nextInt(401) + 100; //Random from 100-500 inclusive
-        currentHP = maxHP;
-        attackPower = randomizer.nextInt(10) + 1; //Random from 1-10 inclusive
-        weaponOnHand = null;
+    private int hpRandomizer(MonsterType monsterType){
+        if(monsterType == MonsterType.SLIME){
+            return randomizer.nextInt(10) + 1;
+        }
+        else if(monsterType == MonsterType.SNAKE){
+            return randomizer.nextInt(11) + 10;
+        }
+        else if(monsterType == MonsterType.WOLF){
+            return randomizer.nextInt(11) + 20;
+        }
+        else{
+            return 100;
+        }
     }
 
-    public void setAggro(boolean state){
-        aggro = state;
+    private int atkRandomizer(MonsterType monsterType){
+        if(monsterType == MonsterType.SLIME){
+            return randomizer.nextInt(5) + 1;
+        }
+        else if(monsterType == MonsterType.SNAKE){
+            return randomizer.nextInt(6) + 5;
+        }
+        else if(monsterType == MonsterType.WOLF){
+            return randomizer.nextInt(6) + 10;
+        }
+        else{
+            return 20;
+        }
     }
 
-    public boolean getAggro(){
-        return aggro;
+    public Monster(MonsterType monsterType){
+        monsterName = monsterType.getMonsterName();
+        monsterDescription = monsterType.getMonsterDescription();
+        monsterMaxHP = hpRandomizer(monsterType);
+        currentHP = monsterMaxHP;
+        monsterAtk = atkRandomizer(monsterType);
+    }
+
+    public int getMonsterAtk(){
+        return monsterAtk;
+    }
+
+    public int getMonsterHP(){
+        return monsterMaxHP;
+    }
+
+    public String getMonsterName(){
+        return monsterName;
     }
 
     public void setDead(){
@@ -27,30 +66,18 @@ public class Monster extends Stats{
         isDead = true;
     }
 
-    public void monsterPowerDescription(){
-        int attackPotential = attackDamage();
-        if(attackPotential >= 1 && attackPotential <= 10){
-            System.out.println("This one seems weak, but don't let your guard down.");
-        }
-        else if(attackPotential >= 11 && attackPotential <= 30){
-            System.out.println("This one seems well-rounded. It will not be easy.");
-        }
-        else{
-            System.out.println("This one is strong. Play safe.");
-        }
-    }
 
-    public void StatsInfo(){
-        System.out.println("Monster status: ");
+    public void statsInfo(){
+        System.out.println(monsterName + "'s status: ");
         System.out.println(" - HP: " + currentHP);
-        if(weaponOnHand != null){
-            System.out.println("The monster currently equipping: " + weaponOnHand.getName());
-            System.out.println(" - attack power: " + attackPower + " (base) + " + weaponOnHand.getAttackPower()
-                    + " (" + weaponOnHand.getName() + ") ");
-        }
-        else{
-            System.out.println(" - attack power: " + attackPower + " (base)");
-        }
+//        if(weaponOnHand != null){
+//            System.out.println("The monster currently equipping: " + weaponOnHand.getName());
+//            System.out.println(" - attack power: " + attackPower + " (base) + " + weaponOnHand.getAttackPower()
+//                    + " (" + weaponOnHand.getName() + ") ");
+//        }
+//        else{
+//            System.out.println(" - attack power: " + attackPower + " (base)");
+//        }
 
     }
 
