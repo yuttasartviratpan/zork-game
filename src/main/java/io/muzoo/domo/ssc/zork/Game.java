@@ -1,11 +1,11 @@
 package io.muzoo.domo.ssc.zork;
 
+import io.muzoo.domo.ssc.zork.character.MonsterType;
 import io.muzoo.domo.ssc.zork.character.Player;
-import io.muzoo.domo.ssc.zork.command.Command;
 import io.muzoo.domo.ssc.zork.command.CommandCenter;
 import io.muzoo.domo.ssc.zork.command.CommandType;
 import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
-import io.muzoo.domo.ssc.zork.command.commands.Play;
+import io.muzoo.domo.ssc.zork.item.Item;
 import io.muzoo.domo.ssc.zork.map.Room;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +19,9 @@ public class Game {
     private String arguments;
     private Room map;
     private Player player;
-
+    private Integer objectiveAmount = -1;
+    private boolean onceReminder = true;
+    private String startingRoom;
 
     public Game(){
         parser = new ParserAndProcessor();
@@ -29,6 +31,15 @@ public class Game {
 
     public void setMap(Room map){
         this.map = map;
+    }
+
+    public void setMapPlay(Room map){
+        this.map = map;
+        startingRoom = map.getRoomName();
+    }
+
+    public void setObjectiveAmount(Integer objectiveAmount){
+        this.objectiveAmount = objectiveAmount;
     }
 
     public Room getMap(){
@@ -67,10 +78,32 @@ public class Game {
             try{
                 commandCenter.checkCommand(commandType, this, arguments);
                 if(map != null){
-                    boolean monsterKilled = map.checkIfMonsterDead();
-                    if(monsterKilled){
-                        System.out.println("You feel stronger...");
-                        player.incrementAtk(2);
+                    if(map.getMonsterInRoom() != null){
+                        if(map.getMonsterInRoom().getMonsterType() == MonsterType.BOSS){
+                            Item dropItem = map.getMonsterInRoom().getMonsterDrop();
+                            boolean monsterKilled = map.checkIfMonsterDead();
+                            if(monsterKilled){
+                                System.out.println("You feel accomplished");
+                                System.out.println("You acquired " + dropItem.getItemName() + "!!");
+                                player.pickUpItem(dropItem);
+                                player.incrementAtk(100);
+                            }
+                        }
+                        else{
+                            boolean monsterKilled = map.checkIfMonsterDead();
+                            if(monsterKilled){
+                                System.out.println("You feel stronger...");
+                                player.incrementAtk(2);
+                            }
+                        }
+                    }
+                    if(player.getCollectedKeyItem() == objectiveAmount && !map.getRoomName().equals(startingRoom) && onceReminder){
+                        System.out.println("You have collected all key items, let's get out of here. Get back to where you started");
+                        onceReminder = false;
+                    }
+                    else if(player.getCollectedKeyItem() == objectiveAmount && map.getRoomName().equals(startingRoom)){
+                        System.out.println("Congratulation. You won");
+                        gameRunning = false;
                     }
                 }
             }catch (NoSuchMethodException e){

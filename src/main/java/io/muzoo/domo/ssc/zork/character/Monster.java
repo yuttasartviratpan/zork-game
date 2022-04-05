@@ -1,6 +1,8 @@
 package io.muzoo.domo.ssc.zork.character;
 
 //import io.muzoo.domo.ssc.zork.item.ItemWeapon;
+import io.muzoo.domo.ssc.zork.item.Item;
+
 import java.util.Random;
 public class Monster{
     Random randomizer = new Random();
@@ -10,6 +12,8 @@ public class Monster{
     int monsterAtk;
     int monsterMaxHP;
     int currentHP;
+    MonsterType monsterType;
+    Item monsterDrop;
 
     private int hpRandomizer(MonsterType monsterType){
         if(monsterType == MonsterType.SLIME){
@@ -47,6 +51,17 @@ public class Monster{
         monsterMaxHP = hpRandomizer(monsterType);
         currentHP = monsterMaxHP;
         monsterAtk = atkRandomizer(monsterType);
+        this.monsterType = monsterType;
+        this.monsterDrop = monsterType.getMonsterDrop();
+    }
+
+
+    public Item getMonsterDrop(){
+        return monsterDrop;
+    }
+
+    public MonsterType getMonsterType(){
+        return monsterType;
     }
 
     public void decrementMonsterHP(int hp){

@@ -1,36 +1,24 @@
 package io.muzoo.domo.ssc.zork.character;
 
+import io.muzoo.domo.ssc.zork.item.Item;
+
 import java.util.Random;
 
 public enum MonsterType {
-    SLIME("slime", "A pool of substance that looks alive, it erodes your skin"),
-    SNAKE("snake", "A limbless, carnivorous reptiles. It doesn't look like it's poisonous"),
-    WOLF("wolf", "A canis lupus. Beware if it's ferocity"),
-    BOSS("boss", "A bandit that searching for valuables. He is armed to the teeth, be careful.");
-
-    /*
-        MaxHP value for monsters:
-            - Slime: 1-10
-            - (Non-venomous) Snakes: 10 - 20
-            - Wolves: 20 - 30
-            - [Boss] Thief: 100
-     */
-
-    /*
-        Atk value for monsters:
-            - Slime: 1-5
-            - (Non-venomous) Snakes: 5-10
-            - Wolves: 10-15
-            - [Boss] Thief: 20
-     */
+    SLIME("slime", "A pool of substance that looks alive, it erodes your skin", null),
+    SNAKE("snake", "A limbless, carnivorous reptiles. It doesn't look like it's poisonous", null),
+    WOLF("wolf", "A canis lupus. Beware if it's ferocity", null),
+    BOSS("boss", "A bandit that searching for valuables. He is armed to the teeth, be careful.", Item.KEY_ITEM);
 
 
     private String monsterName;
     private String monsterDescription;
+    private Item monsterDrop;
 
-    MonsterType(String monsterName, String monsterDescription){
+    MonsterType(String monsterName, String monsterDescription, Item monsterDrop){
         this.monsterName = monsterName;
         this.monsterDescription = monsterDescription;
+        this.monsterDrop = monsterDrop;
     }
 
     public String getMonsterName(){
@@ -41,5 +29,12 @@ public enum MonsterType {
         return monsterDescription;
     }
 
+    public void setMonsterDrop(Item item){
+        this.monsterDrop = item;
+    }
+
+    public Item getMonsterDrop(){
+        return monsterDrop;
+    }
 
 }

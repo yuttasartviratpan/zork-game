@@ -215,4 +215,9 @@ public class Player{
         }
     }
 
+
+    public int getCollectedKeyItem(){
+        return keyItemInventory.size();
+    }
+
 }

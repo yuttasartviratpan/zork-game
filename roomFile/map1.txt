@@ -26,9 +26,9 @@ Green House\.NULL\.Mansion Entrance\.NULL\.NULL\.NULL\.NULL
 Gardening Tool House\.NULL\.NULL\.Mansion Entrance\.NULL\.NULL\.Chemical Storage's Room
 Main Lobby\.Toilet\.Living Room\.Dining Area\.Mansion Entrance\.2nd Floor's Hallway\.NULL
 Dining Area\.Kitchen\.Main Lobby\.NULL\.NULL\.NULL\.NULL
-Living Room\.NULL\.NULL\.Main Lobby\.NULL\.NULL\.NULL
+Living Room\.NULL\.NULL\.Main Lobby\.NULL\.NULL\.NULLs
 Toilet\.NULL\.NULL\.NULL\.Main Lobby\.NULL\.NULL
-Kitchen\.Backyard\.Food Storage Room\.NULL\.Main Lobby\.NULL\.NULL
+Kitchen\.Backyard\.Food Storage Room\.NULL\.Dining Area\.NULL\.NULL
 Food Storage Room\.NULL\.NULL\.Kitchen\.NULL\.NULL\.Kitchenware Storage's Room
 Backyard\.NULL\.NULL\.NULL\.Kitchen\.NULL\.NULL
 2nd Floor's Hallway\.2nd Floor's Living Room\.East Hallway\.West Hallway\.NULL\.NULL\.Main Lobby
@@ -45,6 +45,8 @@ Secret Room\.Kitchenware Storage's Room\.NULL\.NULL\.NULL\.NULL\.NULL
 .starting
 Mansion Entrance
 .setCustomItemAndMonster
-Monster\.BOSS\.Secret Room
+Monster\.BOSS\.Secret Room\.Memorial photograph\.The last memorial proof that you have of her. You've finally got it
 Item\.INSTAKILL_SWORD\.Secret Room
 Item\.KEY_ITEM\.Mansion Entrance\.A diary\.Rosemary's diary. A record of your important one's daily life. Your tear starts to swell up thinking about those days.
+.collectObjective
+2

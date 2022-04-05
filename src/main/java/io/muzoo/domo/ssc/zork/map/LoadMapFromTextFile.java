@@ -7,6 +7,7 @@ import io.muzoo.domo.ssc.zork.item.ItemType;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class LoadMapFromTextFile {
     File newFile;
     Map<String, Room> roomStorage = new HashMap<>();
     String startingRoom;
+    Integer objectiveAmount = 0;
 
     public LoadMapFromTextFile(String filepath){
         //Just use absolute path as an input
@@ -92,6 +94,10 @@ public class LoadMapFromTextFile {
                     mode = 4;
                     continue;
                 }
+                if(text.equals(".collectObjective")){
+                    mode = 5;
+                    continue;
+                }
                 if(mode == 1){
                     //trimmed String: RoomName\.RoomDescription\.RoomFloor
                     String[] parsedText = text.split("\\\\.");
@@ -117,14 +123,23 @@ public class LoadMapFromTextFile {
                 else if(mode == 3){
                     startingRoom = text;
                 }
-                else{
+                else if(mode == 4){
                     String[] parsedText = text.split("\\\\.");
                     Monster monster;
                     Item item;
                     if(parsedText[0].equalsIgnoreCase("monster")){
                         switch (parsedText[1]){
                             case "BOSS":
-                                customMonsterSetting(MonsterType.BOSS, parsedText[2]);
+                                try{
+                                    Item dropItem = Item.KEY_ITEM2;
+                                    dropItem.setItemName(parsedText[3]);
+                                    dropItem.setItemDescription(parsedText[4]);
+                                    MonsterType boss = MonsterType.BOSS;
+                                    boss.setMonsterDrop(dropItem);
+                                    customMonsterSetting(boss, parsedText[2]);
+                                } catch (IndexOutOfBoundsException e){
+                                    throw new RuntimeException("BossDropUnspecifiedException");
+                                }
                                 break;
                             case "SLIME":
                                 customMonsterSetting(MonsterType.SLIME, parsedText[2]);
@@ -170,7 +185,9 @@ public class LoadMapFromTextFile {
                         }
                     }
                 }
-
+                else{
+                    objectiveAmount = Integer.parseInt(text);
+                }
             }
         }
         catch (IOException e){
@@ -191,10 +208,12 @@ public class LoadMapFromTextFile {
     }
 
 
-    public Room getRoom(){
+    public List<Object> getRoom(){
         parsingData();
         //Return the starting room, where you want player to start
-        return roomStorage.get(startingRoom);
+        return List.of(objectiveAmount, roomStorage.get(startingRoom));
     }
+
+
 
 }
