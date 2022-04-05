@@ -70,14 +70,7 @@ public class Monster{
     public void statsInfo(){
         System.out.println(monsterName + "'s status: ");
         System.out.println(" - HP: " + currentHP);
-//        if(weaponOnHand != null){
-//            System.out.println("The monster currently equipping: " + weaponOnHand.getName());
-//            System.out.println(" - attack power: " + attackPower + " (base) + " + weaponOnHand.getAttackPower()
-//                    + " (" + weaponOnHand.getName() + ") ");
-//        }
-//        else{
-//            System.out.println(" - attack power: " + attackPower + " (base)");
-//        }
+        System.out.println(" - attack power: " + monsterAtk);
 
     }
 

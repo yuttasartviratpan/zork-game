@@ -51,5 +51,14 @@ public enum Item {
         return itemName;
     }
 
+    public Integer getItemValue(){
+        return value;
+    }
+
+    public ItemType getItemType(){
+        return itemType;
+    }
+
+
 }
 
