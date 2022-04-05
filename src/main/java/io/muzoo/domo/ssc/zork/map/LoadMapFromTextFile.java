@@ -210,6 +210,7 @@ public class LoadMapFromTextFile {
 
     public List<Object> getRoom(){
         parsingData();
+
         //Return the starting room, where you want player to start
         return List.of(objectiveAmount, roomStorage.get(startingRoom));
     }

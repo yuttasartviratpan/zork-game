@@ -14,21 +14,14 @@ public enum CommandType {
             1, true),
     USE(Use.class,"use", "<item name> : Use the specify item",
             1, true),
-    /*
-    DROP(CommandDrop.class,"drop", "<item name> : Drop a specified item that you have in inventory",
+    DROP(Drop.class,"drop", "<item name> : Drop a specified item that you have in inventory",
             1, true),
-    ATTACK(CommandAttack.class,"attack", ": Attack the monster currently in the room",
+    ATTACK(Attack.class,"attack", ": Attack the monster currently in the room",
             0, true),
-            */
     GO(Go.class,"go", "<direction (NEWS) + Up and Down> : Move to the next location by giving specific direction",
             1, true),
-    /*
-    MAP(CommandMap.class,"map", ": Print out the structure of the current map you're playing",
+    MAP(Map.class,"map", ": Print out the structure of the current map you're playing",
             0, true),
-    AUTOPILOT(CommandAutoPilot.class,"autopilot", "<file name> : Play this game using the file containing commands for this game",
-            1, false),
-
-     */
     HELP(Help.class,"help", ": Get all the commands available for this game",
             0, false),
     QUIT(Quit.class,"quit", ": Exit from the current map you're playing in. Warning: The progress will not be save " +
@@ -36,12 +29,6 @@ public enum CommandType {
             0, true),
     PLAY(Play.class,"play", "<map name> : Start the game in a map of specified choice",
             1, false),
-    /*
-    LOAD(CommandLoad.class,"load", "<save name> : Continue the game from the saved progress from specified save name",
-            1, true),
-    SAVE(CommandSave.class,"save", "<save name> Record the current progress as the specified name",
-            1, true),
-            */
     EXIT(Exit.class,"exit", ": Terminate the program instance",
             0, false),
 
@@ -49,11 +36,6 @@ public enum CommandType {
             1, true),
     INVENTORY(Inventory.class,"inventory", "View the current item you owned." +
             "to view all types of item", 1, true);
-        /*
-    INSPECT(CommandInspect.class,"inspect", "<item name> Analyse the specified item, to get information from it",
-            1, true);
-
-     */
 
     private Class<? extends Command> commandClass;
     private String commandString;

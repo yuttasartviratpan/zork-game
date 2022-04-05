@@ -23,6 +23,7 @@ public class Play extends Command {
             List<Object> newMap = new LoadMapFromTextFile(gettingMap.getMap(argument)).getRoom();
             gameState.setObjectiveAmount((Integer) newMap.get(0));
             gameState.setMapPlay((Room) newMap.get(1));
+            gameState.setMapName(argument);
             gameState.getMap().setPlayerIsHere(true);
             gameState.setInGameState(true);
             gameState.setPlayer(new Player()); //Preventing loot farming by going in and exiting

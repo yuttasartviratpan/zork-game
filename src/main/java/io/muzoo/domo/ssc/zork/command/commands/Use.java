@@ -23,7 +23,7 @@ public class Use extends Command {
                 else if(action == ItemUseAction.USE_THROWABLE){
                     if(gameState.getMap().getMonsterInRoom() != null){
                         Random random = new Random();
-                        System.out.println("You used " + item.getItemName() + " on the enemy");
+                        System.out.println("You used " + item.getItemName() + " on the enemy, keeping you distance");
                         int number = random.nextInt(2);
                         if(number == 1){
                             System.out.println("It hits the enemy!");

@@ -20,7 +20,7 @@ public class Player{
     public Player(){
         maxHP = 100;
         currentHP = maxHP;
-        attackPower = 10;
+        attackPower = 1;
         weaponOnHand = null;
         gameOver = false;
         consumableInventory = new HashMap<>();
@@ -29,12 +29,12 @@ public class Player{
         keyItemInventory = new ArrayList<>();
     }
 
-    public void setCurrentHP(int hp) {
-        currentHP = hp;
+    public void decrementHP(int hp){
+        currentHP -= hp;
     }
 
-    public void setMaxHP(int hp) {
-        maxHP = hp;
+    public int getCurrentHP(){
+        return currentHP;
     }
 
     public void incrementAtk(int atk){
@@ -168,18 +168,26 @@ public class Player{
         if(item.getItemType() == ItemType.WEAPON){
             if(weaponInventory.contains(item)){
                 weaponInventory.remove(item);
+                System.out.println("Successfully dropped " + item.getItemName());
             }
             else{
-                System.out.println("You cannot drop what you don't own");
+                if(weaponOnHand == item){
+                    System.out.println("It's better to stay armed");
+                }
+                else{
+                    System.out.println("You cannot drop what you don't own");
+                }
             }
         }
         else if(item.getItemType() == ItemType.CONSUMABLE){
             if(consumableInventory.containsKey(item)){
                 if(consumableInventory.get(item) > 1){
                     consumableInventory.put(item, consumableInventory.get(item) - 1);
+                    System.out.println("Successfully dropped " + item.getItemName());
                 }
                 else if(consumableInventory.get(item) == 1){
                     consumableInventory.remove(item);
+                    System.out.println("Successfully dropped " + item.getItemName());
                 }
                 else{
                     System.out.println("You cannot drop what you don't own");

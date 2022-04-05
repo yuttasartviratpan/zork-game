@@ -48,6 +48,10 @@ public class Room {
 
     }
 
+    public int getFloorNum(){
+        return floorNum;
+    }
+
     public Room getNeighbor(String direction){
         if(neighbor.containsKey(direction.toLowerCase())){
             return neighbor.get(direction);

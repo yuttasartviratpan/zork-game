@@ -22,6 +22,7 @@ public class Game {
     private Integer objectiveAmount = -1;
     private boolean onceReminder = true;
     private String startingRoom;
+    private String mapName;
 
     public Game(){
         parser = new ParserAndProcessor();
@@ -31,6 +32,14 @@ public class Game {
 
     public void setMap(Room map){
         this.map = map;
+    }
+
+    public void setMapName(String name){
+        mapName = name;
+    }
+
+    public String getMapName(){
+        return mapName;
     }
 
     public void setMapPlay(Room map){
@@ -96,6 +105,10 @@ public class Game {
                                 player.incrementAtk(2);
                             }
                         }
+                    }
+                    if(player.getCurrentHP() <= 0){
+                        System.out.println("You died, game over");
+                        gameRunning = false;
                     }
                     if(player.getCollectedKeyItem() == objectiveAmount && !map.getRoomName().equals(startingRoom) && onceReminder){
                         System.out.println("You have collected all key items, let's get out of here. Get back to where you started");

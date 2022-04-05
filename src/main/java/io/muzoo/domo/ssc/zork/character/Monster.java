@@ -55,6 +55,13 @@ public class Monster{
         this.monsterDrop = monsterType.getMonsterDrop();
     }
 
+    public int getMonsterCurrentHP(){
+        return currentHP;
+    }
+
+    public int getMonsterAtk(){
+        return monsterAtk;
+    }
 
     public Item getMonsterDrop(){
         return monsterDrop;
@@ -69,7 +76,7 @@ public class Monster{
     }
 
     public boolean isDead(){
-        if(currentHP < 0){
+        if(currentHP <= 0){
             isDead = true;
             System.out.println("Enemy has been defeated!");
         }
