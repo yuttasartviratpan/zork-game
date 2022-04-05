@@ -66,6 +66,13 @@ public class Game {
             arguments = game_instance.getArguments();
             try{
                 commandCenter.checkCommand(commandType, this, arguments);
+                if(map != null){
+                    boolean monsterKilled = map.checkIfMonsterDead();
+                    if(monsterKilled){
+                        System.out.println("You feel stronger...");
+                        player.incrementAtk(2);
+                    }
+                }
             }catch (NoSuchMethodException e){
                 System.out.println("No such method");
                 e.printStackTrace();

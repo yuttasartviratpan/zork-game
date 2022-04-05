@@ -8,7 +8,10 @@ public class CommandCenter {
     public void checkCommand(CommandType commandType, Game gameState, String arguments) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         if(commandType == null) {
             System.out.println("Unknown command or no command entered. Use \"help\" to view all available command");
-        } else if (commandType.getInGameOnly() != gameState.getInGameState() && gameState.getInGameState()) {
+        } else if (commandType == CommandType.HELP){
+            commandType.getCommandClass().getDeclaredConstructor().newInstance().run(gameState, arguments);
+        }
+        else if (commandType.getInGameOnly() != gameState.getInGameState() && gameState.getInGameState()) {
             System.out.println("You can't use this command while you're in a map");
         } else if (commandType.getInGameOnly() != gameState.getInGameState()) {
             System.out.println("You can't use this command while you're outside a map");

@@ -11,7 +11,7 @@ public enum Item {
     SHORT_SWORD("Short sword", "A sharp short iron sword. There is a tiger face engraved on the handle", 30, ItemType.WEAPON),
     INSTAKILL_SWORD("God sword", "A sword created by the god themselves. Why do you even have this?", Integer.MAX_VALUE, ItemType.WEAPON),
     HEALTH_POTION("Healing potion", "A strange pot of medicine, it smells bitterly, but it has a healing properties", 20, ItemType.CONSUMABLE),
-    THROWING_KNIFE("Throwing knives", "A set of small knives, should be thrown instead", 50, ItemType.CONSUMABLE),
+    THROWING_KNIFE("Throwing knives", "A set of small knives, should be thrown instead", 15, ItemType.CONSUMABLE),
     KEY_ITEM("<Insert key item name here>", "<Inset key item description here>", null, ItemType.KEY);
 
     String itemName;
@@ -59,6 +59,17 @@ public enum Item {
         return itemType;
     }
 
+    public static Item stringNameToItemType(String itemName){
+        for(Item item : values()){
+            if(itemName.equals(item.itemName)){
+                if(item.itemType == ItemType.KEY){
+                    return null;
+                }
+                return item;
+            }
+        }
+        return null;
+    }
 
 }
 

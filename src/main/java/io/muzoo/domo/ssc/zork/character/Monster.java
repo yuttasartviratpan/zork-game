@@ -49,21 +49,16 @@ public class Monster{
         monsterAtk = atkRandomizer(monsterType);
     }
 
-    public int getMonsterAtk(){
-        return monsterAtk;
+    public void decrementMonsterHP(int hp){
+        currentHP -= hp;
     }
 
-    public int getMonsterHP(){
-        return monsterMaxHP;
-    }
-
-    public String getMonsterName(){
-        return monsterName;
-    }
-
-    public void setDead(){
-        System.out.println("The monster has been defeated");
-        isDead = true;
+    public boolean isDead(){
+        if(currentHP < 0){
+            isDead = true;
+            System.out.println("Enemy has been defeated!");
+        }
+        return isDead;
     }
 
 

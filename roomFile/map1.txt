@@ -31,7 +31,7 @@ Toilet\.NULL\.NULL\.NULL\.Main Lobby\.NULL\.NULL
 Kitchen\.Backyard\.Food Storage Room\.NULL\.Main Lobby\.NULL\.NULL
 Food Storage Room\.NULL\.NULL\.Kitchen\.NULL\.NULL\.Kitchenware Storage's Room
 Backyard\.NULL\.NULL\.NULL\.Kitchen\.NULL\.NULL
-2nd Floor's Hallway\.2nd Floor's Living Room\.NULL\.NULL\.NULL\.NULL\.Main Lobby
+2nd Floor's Hallway\.2nd Floor's Living Room\.East Hallway\.West Hallway\.NULL\.NULL\.Main Lobby
 West Hallway\.Veronica's Room\.2nd Floor's Hallway\.NULL\.NULL\.NULL\.NULL
 East Hallway\.Sebastian's Room\.NULL\.2nd Floor's Hallway\.NULL\.NULL\.NULL
 2nd Floor's Living Room\.NULL\.NULL\.NULL\.2nd Floor's Hallway\.NULL\.NULL

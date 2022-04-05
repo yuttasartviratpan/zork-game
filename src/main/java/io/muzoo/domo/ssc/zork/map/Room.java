@@ -57,6 +57,17 @@ public class Room {
         }
     }
 
+    public boolean checkIfMonsterDead(){
+        if(monsterInRoom != null){
+            if(monsterInRoom.isDead()){
+                monsterInRoom = null;
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public String getRoomName(){
         return roomName;
     }

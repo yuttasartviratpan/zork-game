@@ -24,6 +24,7 @@ public class Player{
         weaponOnHand = null;
         gameOver = false;
         consumableInventory = new HashMap<>();
+        consumableInventory.put(Item.THROWING_KNIFE, 99);
         weaponInventory = new ArrayList<>();
         keyItemInventory = new ArrayList<>();
     }
@@ -36,12 +37,24 @@ public class Player{
         maxHP = hp;
     }
 
-    public void setAttackPower(int powerLevel) {
-        attackPower = powerLevel;
+    public void incrementAtk(int atk){
+        attackPower += atk;
     }
 
-    public int getCurrentHP(){
-        return currentHP;
+    public void roomHeal(){
+        if(currentHP + 5 > maxHP){
+            currentHP = maxHP;
+        }
+        else{
+            currentHP += 5;
+        }
+    }
+
+    public void incrementCurrentHP(int hp){
+        currentHP += hp;
+        if(currentHP > maxHP){
+            currentHP = maxHP;
+        }
     }
 
     public int attackDamage() {
@@ -97,11 +110,9 @@ public class Player{
     public ItemUseAction useItem(Item item){
         if(item.getItemType() == ItemType.CONSUMABLE){
             if(!consumableInventory.containsKey(item)){
-                System.out.println("You do not own any of that item");
                 return ItemUseAction.NO_ACTION;
             }
             else{
-                System.out.println("Item used");
                 consumableInventory.put(item, consumableInventory.get(item) - 1);
                 if(consumableInventory.get(item) == 0){
                     consumableInventory.remove(item);
@@ -148,6 +159,9 @@ public class Player{
                 System.out.println(" - " + key.getItemName());
             }
         }
+        if(weaponInventory.isEmpty() && consumableInventory.isEmpty() && keyItemInventory.isEmpty()){
+            System.out.println("You have nothing on you");
+        }
     }
 
     public void dropItem(Item item){
@@ -182,6 +196,7 @@ public class Player{
             if(weaponInventory.contains(weapon)){
                 weaponInventory.remove(weapon);
                 weaponOnHand = weapon;
+                System.out.println("Successfully equipped " + weapon.getItemName());
             }
             else{
                 System.out.println("You do not own that weapon");
@@ -192,6 +207,7 @@ public class Player{
                 weaponInventory.add(weaponOnHand);
                 weaponOnHand = weapon;
                 weaponInventory.remove(weapon);
+                System.out.println("Successfully equipped " + weapon.getItemName());
             }
             else{
                 System.out.println("You do not own that weapon");

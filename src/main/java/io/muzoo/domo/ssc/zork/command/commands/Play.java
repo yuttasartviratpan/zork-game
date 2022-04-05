@@ -18,6 +18,7 @@ public class Play extends Command {
         }
         else{
             gameState.setMap((new LoadMapFromTextFile(gettingMap.getMap(argument))).getRoom());
+            gameState.getMap().setPlayerIsHere(true);
             gameState.setInGameState(true);
             gameState.setPlayer(new Player()); //Preventing loot farming by going in and exiting
             System.out.println("Map: " + argument + " loaded successfully");
