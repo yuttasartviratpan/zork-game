@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <excludeFromCompile>
-      <file url="file://$PROJECT_DIR$/src/main/java/io/muzoo/domo/ssc/zork/Game.java" />
-      <directory url="file://$PROJECT_DIR$/src/main/java/io/muzoo/domo/ssc/zork/command" includeSubdirectories="true" />
-      <file url="file://$PROJECT_DIR$/src/main/java/io/muzoo/domo/ssc/zork/character/Player.java" />
-      <file url="file://$PROJECT_DIR$/src/main/java/io/muzoo/domo/ssc/zork/character/Stats.java" />
-    </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />

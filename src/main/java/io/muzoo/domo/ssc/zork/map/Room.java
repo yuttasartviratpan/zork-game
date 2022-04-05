@@ -48,13 +48,14 @@ public class Room {
 
     }
 
-//    public void setItemInRoom(Item item){
-//        itemInRoom = item;
-//    }
-
-//    public void setMonsterInRoom(Monster monster){
-//        monsterInRoom = monster;
-//    }
+    public Room getNeighbor(String direction){
+        if(neighbor.containsKey(direction.toLowerCase())){
+            return neighbor.get(direction);
+        }
+        else{
+            return null;
+        }
+    }
 
     public String getRoomName(){
         return roomName;

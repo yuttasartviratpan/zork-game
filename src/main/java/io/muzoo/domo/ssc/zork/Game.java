@@ -1,28 +1,47 @@
 package io.muzoo.domo.ssc.zork;
 
+import io.muzoo.domo.ssc.zork.character.Player;
+import io.muzoo.domo.ssc.zork.command.Command;
 import io.muzoo.domo.ssc.zork.command.CommandCenter;
 import io.muzoo.domo.ssc.zork.command.CommandType;
 import io.muzoo.domo.ssc.zork.command.ParserAndProcessor;
-import io.muzoo.domo.ssc.zork.map.ZorkMap;
+import io.muzoo.domo.ssc.zork.command.commands.Play;
+import io.muzoo.domo.ssc.zork.map.Room;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class Game {
-    ZorkMap map;
-    CommandCenter command;
-    ParserAndProcessor parser;
-    boolean inGame = false;
-    boolean gameRunning = true;
-    CommandType commandType;
-    String arguments;
+    private ParserAndProcessor parser;
+    private boolean inGame = false;
+    private boolean gameRunning = true;
+    private CommandType commandType;
+    private CommandCenter commandCenter = new CommandCenter();
+    private String arguments;
+    private Room map;
+    private Player player;
 
 
     public Game(){
-        map = null;
         parser = new ParserAndProcessor();
-        command = new CommandCenter();
+        map = null;
+        player = new Player();
     }
 
+    public void setMap(Room map){
+        this.map = map;
+    }
+
+    public Room getMap(){
+        return map;
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public void setPlayer(Player player){
+        this.player = player;
+    }
 
     public boolean getInGameState(){
         return inGame;
@@ -32,17 +51,11 @@ public class Game {
         inGame = state;
     }
 
-    public ZorkMap getMap(){
-        return map;
-    }
-
-    public void setMap(ZorkMap theMap){
-        map = theMap;
-    }
-
     public void setGameRunning(boolean state){
         gameRunning = state;
     }
+
+
 
     public void runGame(){
         System.out.println("Welcome to this god awful game. Try saying some command!");
@@ -52,7 +65,7 @@ public class Game {
             commandType = game_instance.getCommandType();
             arguments = game_instance.getArguments();
             try{
-                command.checkCommand(commandType, this, arguments);
+                commandCenter.checkCommand(commandType, this, arguments);
             }catch (NoSuchMethodException e){
                 System.out.println("No such method");
                 e.printStackTrace();

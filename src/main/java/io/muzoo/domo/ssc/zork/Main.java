@@ -11,15 +11,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        Map<String, Room> test = new LoadMapFromTextFile("/home/pong/zork/roomFile/map1.txt").getRooms();
-        for(String roomName : test.keySet()){
-            if(test.get(roomName).getItemInRoom() != null){
-                System.out.println(test.get(roomName).getItemInRoom().getItemName());
-            }
-            else{
-                System.out.println("No item");
-            }
-        }
+        //Room test = new LoadMapFromTextFile("/home/pong/zork/roomFile/map1.txt").getRooms();
+
 //        Monster a = new Monster(MonsterType.SLIME);
 //        Monster b = new Monster(MonsterType.SLIME);
 //        //a.statsInfo();
@@ -30,7 +23,7 @@ public class Main {
         //System.out.println(test.get("Main Lobby").getRoomName());
         //System.out.println(test.get("Main Lobby").getRoomDescription());
         //test.get("Main Lobby").printAvailablePath();
-        //Game gameInstance = new Game();
-        //gameInstance.runGame();
+        Game gameInstance = new Game();
+        gameInstance.runGame();
     }
 }

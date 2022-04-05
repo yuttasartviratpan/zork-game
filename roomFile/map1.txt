@@ -23,8 +23,8 @@ Secret Room\.A hidden room around kitchenware storage room. There are awfully a 
 .neighbor
 Mansion Entrance\.Main Lobby\.Gardening Tool House\.Green House\.NULL\.NULL\.NULL
 Green House\.NULL\.Mansion Entrance\.NULL\.NULL\.NULL\.NULL
-Gardening Tool House\.NULL\.NULL\.Mansion Entrance\.NULL\.NULL\.NULL
-Main Lobby\.Toilet\.Living Room\.Dining Room\.Mansion Entrance\.2nd Floor's Hallway\.NULL
+Gardening Tool House\.NULL\.NULL\.Mansion Entrance\.NULL\.NULL\.Chemical Storage's Room
+Main Lobby\.Toilet\.Living Room\.Dining Area\.Mansion Entrance\.2nd Floor's Hallway\.NULL
 Dining Area\.Kitchen\.Main Lobby\.NULL\.NULL\.NULL\.NULL
 Living Room\.NULL\.NULL\.Main Lobby\.NULL\.NULL\.NULL
 Toilet\.NULL\.NULL\.NULL\.Main Lobby\.NULL\.NULL
@@ -42,3 +42,9 @@ Sebastian's Toilet\.NULL\.NULL\.Sebastian's Room\.NULL\.NULL\.NULL
 Chemical Storage's Room\.NULL\.NULL\.NULL\.NULL\.Gardening Tool House\.NULL
 Kitchenware Storage's Room\.NULL\.NULL\.NULL\.Secret Room\.Food Storage Room\.NULL
 Secret Room\.Kitchenware Storage's Room\.NULL\.NULL\.NULL\.NULL\.NULL
+.starting
+Mansion Entrance
+.setCustomItemAndMonster
+Monster\.BOSS\.Secret Room
+Item\.INSTAKILL_SWORD\.Secret Room
+Item\.KEY_ITEM\.Mansion Entrance\.A diary\.Rosemary's diary. A record of your important one's daily life. Your tear starts to swell up thinking about those days.

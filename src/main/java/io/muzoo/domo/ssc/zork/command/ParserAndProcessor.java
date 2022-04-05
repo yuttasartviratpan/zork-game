@@ -21,13 +21,6 @@ public class ParserAndProcessor {
         return command;
     }
 
-    public String getCommandString(){
-        if(command == null){
-            System.out.println("Unknown command or no command entered");
-            return "null";
-        }
-        return command.getCommandString();
-    }
 
     public Class<? extends Command> getCommandClass(){
         return command.getCommandClass();
